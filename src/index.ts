@@ -2,8 +2,11 @@ import express from "express";
 
 import DBConnection from "database/db";
 
+import routes from "./router/router";
+
 const server = express();
 server.use(express.json());
+server.use("/", routes);
 
 const PORT = 3333;
 const HOST = "http://localhost:";
