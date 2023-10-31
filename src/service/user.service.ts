@@ -1,20 +1,16 @@
 import { IUser } from "interface/user";
 import User from "model/User.Schema";
 
-interface IUserService extends IUser {
-  id?: string;
-}
 const finAllUsersService = () => User.find();
 
-const findUserByIdService = ({ id }: IUserService) => User.findById(id);
+const findUserByIdService = (id: string) => User.findById(id);
 
-const createUserService = ({ ...props }: IUserService) =>
-  User.create({ ...props });
+const createUserService = ({ ...props }: IUser) => User.create({ ...props });
 
-const updateUserService = ({ id, ...props }: IUserService) =>
+const updateUserService = (id: string, { ...props }: IUser) =>
   User.findByIdAndUpdate(id, { ...props }, { returnDocument: "after" });
 
-const removeUserService = ({ id }: IUserService) => User.findByIdAndDelete(id);
+const removeUserService = (id: string) => User.findByIdAndDelete(id);
 
 export default {
   finAllUsersService,
