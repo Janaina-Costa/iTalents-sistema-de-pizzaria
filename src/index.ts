@@ -8,7 +8,7 @@ const server = express();
 server.use(express.json());
 server.use("/", routes);
 
-const PORT = 3333;
+const PORT = 3006;
 const HOST = "http://localhost:";
 DBConnection();
 
