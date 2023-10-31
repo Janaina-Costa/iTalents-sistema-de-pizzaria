@@ -13,7 +13,7 @@ const UserSchema = new Schema(
         number: { type: Number, required: true },
         complement: { type: String },
         neighborhood: { type: String, required: true },
-        cellphone: { type: String, required: true },
+        phone: { type: String, required: true },
       },
     ],
     favorite_item: [
