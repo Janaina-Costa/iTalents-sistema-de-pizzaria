@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 interface IAdressUser {
+  [x: string]: any;
   cep: string;
   street: string;
   number: number;
@@ -20,5 +21,4 @@ export interface IUser extends mongoose.Document {
   addresses: IAdressUser[];
   phone: string;
   // favorite_item: IFavoriteItem[];
-  admin: boolean;
 }

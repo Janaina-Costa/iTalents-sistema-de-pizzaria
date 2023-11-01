@@ -27,7 +27,6 @@ const UserSchema = new Schema(
     //   },
     // ],
     phone: { type: String, required: true },
-    admin: { type: Boolean, required: true, default: false },
   },
 
   { timestamps: true },

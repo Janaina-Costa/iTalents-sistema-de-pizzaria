@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-import DATABASE_URI from "settings";
+import { DATABASE_URI } from "settings";
 
 const URI = DATABASE_URI;
 
