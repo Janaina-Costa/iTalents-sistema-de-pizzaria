@@ -1,5 +1,7 @@
 import { Schema, model } from "mongoose";
 
+import { IUser } from "interface/user";
+
 const UserSchema = new Schema(
   {
     name: { type: String, required: true },
@@ -13,22 +15,22 @@ const UserSchema = new Schema(
         number: { type: Number, required: true },
         complement: { type: String },
         neighborhood: { type: String, required: true },
-        phone: { type: String, required: true },
       },
     ],
-    favorite_item: [
-      {
-        _id: Schema.Types.ObjectId,
-        unique: true,
-        ref: "products",
-      },
-    ],
+    // favorite_item: [
+    //   {
+    //     _id: Schema.Types.ObjectId,
+    //     unique: true,
+    //     ref: "products",
+    //   },
+    // ],
+    phone: { type: String, required: true },
     admin: { type: Boolean, required: true, default: false },
   },
 
   { timestamps: true },
 );
 
-const User = model("users", UserSchema);
+const User = model<IUser>("users", UserSchema);
 
 export default User;
