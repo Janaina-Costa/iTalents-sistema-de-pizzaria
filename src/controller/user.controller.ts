@@ -30,22 +30,13 @@ export const findUserByIdController = async (req: Request, res: Response) => {
 
 export const createUserController = async (req: Request, res: Response) => {
   try {
-    const { name, email, password, image, address, favorite_item, admin } =
-      req.body;
+    const user = req.body;
 
-    if (!name || !email || !password) {
+    if (!user.name || !user.email || !user.password || !user.phone) {
       return res.status(400).send({ message: "Empty data is required" });
     }
 
-    const newUser = await userService.createUserService({
-      name,
-      email,
-      password,
-      image,
-      address,
-      favorite_item,
-      admin,
-    });
+    const newUser = await userService.createUserService(user);
 
     return res
       .status(201)
@@ -61,18 +52,9 @@ export const createUserController = async (req: Request, res: Response) => {
 export const updateUserController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { name, email, password, image, address, favorite_item, admin } =
-      req.body;
+    const user = req.body;
 
-    const updatedUser = await userService.updateUserService(id, {
-      name,
-      email,
-      password,
-      image,
-      address,
-      favorite_item,
-      admin,
-    });
+    const updatedUser = await userService.updateUserService(id, user);
 
     return res
       .status(201)
@@ -98,6 +80,71 @@ export const removeUserController = async (req: Request, res: Response) => {
     if (err.kind === "ObjectId") {
       return res.status(400).send({ message: "Id not found" });
     }
+    console.log(`Erro: ${err.message}`);
+    return res.status(500).send({ message: "Internal server error" });
+  }
+};
+
+export const addUserAddressController = async (req: Request, res: Response) => {
+  try {
+    const addresses = req.body;
+    const { id } = req.params;
+    const user = await userService.findUserByIdService(id);
+
+    if (
+      !addresses.cep ||
+      !addresses.street ||
+      !addresses.number ||
+      !addresses.neighborhood ||
+      !addresses.phone
+    ) {
+      return res.status(400).send({ message: "Empty data is required" });
+    }
+    const zipCodeAlreadyExistis = user?.addresses.map(
+      (item) =>
+        item.cep === addresses.cep &&
+        item.number === addresses.number &&
+        item.complement === addresses.complement,
+    );
+
+    if (zipCodeAlreadyExistis?.includes(true)) {
+      return res
+        .status(400)
+        .send({ message: "Address has already registered" });
+    }
+
+    const newAddress = await userService.addUserAddressService(id, addresses);
+
+    if (newAddress.ok === 1) {
+      return res.status(201).send({ message: "Address added successfully" });
+    }
+
+    return res
+      .status(400)
+      .send({ message: "Something wrong when entering the address" });
+  } catch (err: any) {
+    console.log(`Erro: ${err.message}`);
+    return res.status(500).send({ message: "Internal server error" });
+  }
+};
+
+export const removeUserAddressController = async (
+  req: Request,
+  res: Response,
+) => {
+  try {
+    const { addressId, id } = req.body;
+    const addressRemoved = await userService.removeUserAddressService(
+      id,
+      addressId,
+    );
+    console.log("adddrr", addressId);
+
+    if (addressRemoved.ok === 1) {
+      return res.status(201).send({ message: "Address removed successfully" });
+    }
+    return res.status(400).send({ message: "Address not found" });
+  } catch (err: any) {
     console.log(`Erro: ${err.message}`);
     return res.status(500).send({ message: "Internal server error" });
   }
