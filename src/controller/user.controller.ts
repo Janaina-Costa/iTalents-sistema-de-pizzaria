@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable camelcase */
 /* eslint-disable no-console */
 import { Request, Response } from "express";
@@ -142,8 +143,11 @@ export const removeUserAddressController = async (
       id,
       addressId,
     );
+    const existsAddressId = addressRemoved.value?.addresses.map(
+      (item) => item._id === id,
+    );
 
-    if (addressRemoved.ok === 1) {
+    if (existsAddressId?.includes(true)) {
       return res.status(201).send({ message: "Address removed successfully" });
     }
     return res.status(400).send({ message: "Address not found" });
