@@ -46,6 +46,8 @@
             "match":true
           }
         }
-      ]
+      ],
+      "no-console":"off",
+      "no-underscore-dangle":"off"
     }
 }
