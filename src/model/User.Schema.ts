@@ -1,3 +1,5 @@
+/* eslint-disable func-names */
+import bcrypt from "bcrypt";
 import { Schema, model } from "mongoose";
 
 import { IUser } from "interface/user";
@@ -30,6 +32,12 @@ const UserSchema = new Schema(
 
   { timestamps: true },
 );
+UserSchema.pre("save", async function (next) {
+  if (this.password) {
+    this.password = await bcrypt.hash(this.password, 10);
+  }
+  next();
+});
 
 const User = model<IUser>("users", UserSchema);
 
