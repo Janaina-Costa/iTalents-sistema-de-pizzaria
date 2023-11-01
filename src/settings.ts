@@ -2,6 +2,5 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const DATABASE_URI = process.env.DATABASE_URI || "";
-
-export default DATABASE_URI;
+export const DATABASE_URI = process.env.DATABASE_URI || "";
+export const SECRET_TOKEN = process.env.SECRET_TOKEN || "";
