@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import { Document } from "mongoose";
 
 interface IAdressUser {
   [x: string]: any;
@@ -13,7 +13,7 @@ interface IAdressUser {
 //   _id: string;
 // }
 
-export interface IUser extends mongoose.Document {
+export interface IUser extends Document {
   name: string;
   email: string;
   password: string;
