@@ -1,5 +1,7 @@
 import express from "express";
 
+import authUserMiddleware from "middleware/auth.middleware";
+
 import {
   findAllUserController,
   createUserController,
@@ -16,12 +18,20 @@ const router = express.Router();
 router.get("/users", findAllUserController);
 router.get("/user/:id", findUserByIdController);
 router.post("/user/create", createUserController);
-router.put("/user/update/:id", updateUserController);
+router.put("/user/update/:id", authUserMiddleware, updateUserController);
 router.delete("/user/remove/:id", removeUserController);
 
 /* Rotas do endereço do usuário */
-router.post("/user/createAddress/:id", addUserAddressController);
-router.delete("/user/removeAddress", removeUserAddressController);
+router.post(
+  "/user/createAddress/:id",
+  authUserMiddleware,
+  addUserAddressController,
+);
+router.delete(
+  "/user/removeAddress",
+  authUserMiddleware,
+  removeUserAddressController,
+);
 /* Rotas dos favoritos do usuário */
 
 export default router;

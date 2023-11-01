@@ -10,7 +10,7 @@ const createUserService = ({ ...props }: IUser) => User.create({ ...props });
 const updateUserService = (id: string, { ...props }: IUser) =>
   User.findByIdAndUpdate(id, { ...props }, { returnDocument: "after" });
 
-const removeUserService = (id: string) => User.findByIdAndDelete(id);
+const removeUserService = (id: string) => User.findByIdAndRemove(id);
 
 const addUserAddressService = (id: string, address: any) =>
   User.findOneAndUpdate(
