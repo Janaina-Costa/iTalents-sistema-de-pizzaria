@@ -17,9 +17,10 @@ const UserSchema = new Schema(
         number: { type: Number, required: true },
         complement: { type: String },
         neighborhood: { type: String, required: true },
+        createdAt: { type: Date, default: Date.now },
       },
     ],
-    // favorite_item: [
+    // favorite_product: [
     //   {
     //     _id: Schema.Types.ObjectId,
     //     unique: true,
