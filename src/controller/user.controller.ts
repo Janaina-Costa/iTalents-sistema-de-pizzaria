@@ -18,6 +18,11 @@ export const findUserByIdController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const user = await userService.findUserByIdService(id);
+
+    if (user?.id !== id) {
+      return res.status(400).send({ message: "Id not found" });
+    }
+
     return res.status(200).send(user);
   } catch (err: any) {
     if (err.kind === "ObjectId") {
@@ -95,8 +100,7 @@ export const addUserAddressController = async (req: Request, res: Response) => {
       !addresses.cep ||
       !addresses.street ||
       !addresses.number ||
-      !addresses.neighborhood ||
-      !addresses.phone
+      !addresses.neighborhood
     ) {
       return res.status(400).send({ message: "Empty data is required" });
     }
@@ -138,7 +142,6 @@ export const removeUserAddressController = async (
       id,
       addressId,
     );
-    console.log("adddrr", addressId);
 
     if (addressRemoved.ok === 1) {
       return res.status(201).send({ message: "Address removed successfully" });

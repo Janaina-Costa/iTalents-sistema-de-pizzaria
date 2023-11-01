@@ -20,8 +20,8 @@ router.put("/user/update/:id", updateUserController);
 router.delete("/user/remove/:id", removeUserController);
 
 /* Rotas do endereço do usuário */
-router.post("/user/address/createAddress/:id", addUserAddressController);
-router.delete("/user/address/removeAddress", removeUserAddressController);
+router.post("/user/createAddress/:id", addUserAddressController);
+router.delete("/user/removeAddress", removeUserAddressController);
 /* Rotas dos favoritos do usuário */
 
 export default router;
