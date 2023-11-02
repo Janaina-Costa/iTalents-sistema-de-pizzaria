@@ -62,7 +62,7 @@ export const updateUserController = async (req: Request, res: Response) => {
 
     const updatedUser = await userService.updateUserService(id, user);
     if (updatedUser?.id !== id) {
-      return res.status(400).send({ message: "Id not found" });
+      return res.status(400).send({ message: "Product not found" });
     }
 
     return res

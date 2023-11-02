@@ -37,8 +37,9 @@ export const createCartController = async (
       ...cart,
       userId: req.userId,
     };
+    console.log(req.userId);
 
-    const newCart = await cartService.createCartService(cartBody);
+    await cartService.createCartService(cartBody);
 
     return res.status(200).send({ message: "Cart created successfully" });
   } catch (err: any) {
@@ -52,7 +53,7 @@ export const updateCartController = async (req: Request, res: Response) => {
     const { id } = req.params;
     const cart: ICart = req.body;
 
-    const updatedCart = await cartService.updateCartService(id, cart);
+    await cartService.updateCartService(id, cart);
 
     return res.status(200).send({ message: "Cart updated successfully" });
   } catch (err: any) {
@@ -67,7 +68,7 @@ export const updateCartController = async (req: Request, res: Response) => {
 export const removeCartController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const cart = await cartService.removeCartService(id);
+    await cartService.removeCartService(id);
 
     return res.status(201).send({ message: "Cart deleted successfully" });
   } catch (err: any) {

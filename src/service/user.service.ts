@@ -52,7 +52,7 @@ export const addUserFavoriteProductService = (id: string, product: any) =>
     },
     {
       $push: {
-        favorite_product: { _id: String(product._id) },
+        favorite_product: { _id: product._id },
       },
     },
     {

@@ -10,6 +10,7 @@ const UserSchema = new Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     image: { type: String },
+    phone: { type: String, required: true },
     addresses: [
       {
         cep: { type: String, required: true },
@@ -27,7 +28,7 @@ const UserSchema = new Schema(
         createdAt: { type: Date, default: Date.now() },
       },
     ],
-    phone: { type: String, required: true },
+    admin: { type: Boolean, default: false },
   },
 
   { timestamps: true },
