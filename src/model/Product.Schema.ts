@@ -1,13 +1,14 @@
 import { Schema, model } from "mongoose";
 
-import { IProduct } from "interface/product";
+import ProductSizes from "types/enums/products";
+import { IProduct } from "types/interface/product";
 
 const ProductSchema = new Schema(
   {
     name: { type: String, required: true, unique: true },
     description: { type: String, required: true },
     image: { type: String, required: true },
-    size: { type: String, required: true },
+    size: { type: String, enum: ProductSizes, required: true },
     price: { type: Number, required: true },
   },
   { timestamps: true },
