@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 
+import { IUser } from "interface/user";
 import { SECRET_TOKEN } from "settings";
 
 import loginUserService from "../service/auth.service";
@@ -8,7 +9,7 @@ const secret = SECRET_TOKEN;
 
 const loginUserController = async (req: Request, res: Response) => {
   try {
-    const user = req.body;
+    const user: IUser = req.body;
     const userLogin = await loginUserService.login(user.email);
 
     if (!user.email || user.password !== userLogin?.password) {
