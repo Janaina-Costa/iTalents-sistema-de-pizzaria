@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
-import { IUser } from "interface/user";
 import { SECRET_TOKEN } from "settings";
+import { IUser } from "types/interface/user";
 
 import loginUserService from "../service/auth.service";
 

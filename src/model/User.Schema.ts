@@ -2,7 +2,7 @@
 import bcrypt from "bcrypt";
 import { Schema, model } from "mongoose";
 
-import { IUser } from "interface/user";
+import { IUser } from "types/interface/user";
 
 const UserSchema = new Schema(
   {

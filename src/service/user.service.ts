@@ -1,5 +1,5 @@
-import { IUser } from "interface/user";
 import User from "model/User.Schema";
+import { IUser } from "types/interface/user";
 
 export const finAllUsersService = () => User.find();
 

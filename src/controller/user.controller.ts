@@ -3,8 +3,8 @@
 /* eslint-disable no-console */
 import { Request, Response } from "express";
 
-import { IAdressUser, IUser } from "interface/user";
 import * as userService from "service/user.service";
+import { IAdressUser, IUser } from "types/interface/user";
 
 export const findAllUserController = async (req: Request, res: Response) => {
   try {

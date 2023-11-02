@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
-import { IProduct } from "interface/product";
 import * as productService from "service/product.service";
+import { IProduct } from "types/interface/product";
 
 export const findAllProductsController = async (
   req: Request,
@@ -25,7 +25,7 @@ export const findProductByIdController = async (
 
     const product = await productService.findProductByIdService(id);
     if (id !== product?.id) {
-      return res.status(400).send({ message: "Id not found" });
+      return res.status(400).send({ message: "Product not found" });
     }
     return res.status(200).send(product);
   } catch (err: any) {
@@ -35,8 +35,8 @@ export const findProductByIdController = async (
 };
 
 export const createProductController = async (req: Request, res: Response) => {
+  const product: IProduct = req.body;
   try {
-    const product: IProduct = req.body;
     if (
       !product.name ||
       !product.description ||
@@ -56,7 +56,8 @@ export const createProductController = async (req: Request, res: Response) => {
     if (err.code === 11000) {
       return res.status(400).send({ message: "Product already existis!" });
     }
-    console.log(`Erro: ${err.message}`);
+
+    console.log(`Erro: ${err}`);
     return res.status(500).send({ message: "Internal server error" });
   }
 };
@@ -93,7 +94,7 @@ export const removeProductController = async (req: Request, res: Response) => {
       return res.status(400).send({ message: "Product does not exist" });
     }
     if (id !== product?.id) {
-      return res.status(400).send({ message: "Id not found" });
+      return res.status(400).send({ message: "Product not found" });
     }
     return res.status(200).send({ message: "Product removed successfully" });
   } catch (err: any) {
