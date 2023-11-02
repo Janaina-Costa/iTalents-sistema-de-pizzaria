@@ -2,22 +2,15 @@ import { IProduct } from "interface/product";
 
 import Product from "../model/Product.Schema";
 
-const FindAllProductService = () => Product.find();
+export const FindAllProductsService = () => Product.find();
 
-const findProductByIdService = (id: string) => Product.findById(id);
+export const findProductByIdService = (id: string) => Product.findById(id);
 
-const createProductService = ({ ...props }: IProduct) =>
+export const createProductService = ({ ...props }: IProduct) =>
   Product.create({ ...props });
 
-const updateProductService = (id: string, { ...props }: IProduct) =>
-  Product.findByIdAndUpdate(id, { ...props });
+export const updateProductService = (id: string, { ...props }: IProduct) =>
+  Product.findByIdAndUpdate(id, { ...props }, { returnDocument: "after" });
 
-const removeProductService = (id: string) => Product.findByIdAndDelete(id);
-
-export default {
-  FindAllProductService,
-  findProductByIdService,
-  createProductService,
-  updateProductService,
-  removeProductService,
-};
+export const removeProductService = (id: string) =>
+  Product.findByIdAndDelete(id);
