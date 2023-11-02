@@ -3,7 +3,8 @@
 /* eslint-disable no-console */
 import { Request, Response } from "express";
 
-import userService from "service/user.service";
+import { IAdressUser, IUser } from "interface/user";
+import * as userService from "service/user.service";
 
 export const findAllUserController = async (req: Request, res: Response) => {
   try {
@@ -36,7 +37,7 @@ export const findUserByIdController = async (req: Request, res: Response) => {
 
 export const createUserController = async (req: Request, res: Response) => {
   try {
-    const user = req.body;
+    const user: IUser = req.body;
 
     if (!user.name || !user.email || !user.password || !user.phone) {
       return res.status(400).send({ message: "Empty data is required" });
@@ -58,12 +59,15 @@ export const createUserController = async (req: Request, res: Response) => {
 export const updateUserController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const user = req.body;
+    const user: IUser = req.body;
 
     const updatedUser = await userService.updateUserService(id, user);
+    if (updatedUser?.id !== id) {
+      return res.status(400).send({ message: "Id not found" });
+    }
 
     return res
-      .status(201)
+      .status(200)
       .send({ updatedUser, message: "User updated successfully" });
   } catch (err: any) {
     if (err.kind === "ObjectId") {
@@ -93,7 +97,7 @@ export const removeUserController = async (req: Request, res: Response) => {
 
 export const addUserAddressController = async (req: Request, res: Response) => {
   try {
-    const addresses = req.body;
+    const addresses: IAdressUser = req.body;
     const { id } = req.params;
     const user = await userService.findUserByIdService(id);
 

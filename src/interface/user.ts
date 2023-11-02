@@ -1,6 +1,6 @@
 import { Document } from "mongoose";
 
-interface IAdressUser {
+export interface IAdressUser {
   [x: string]: any;
   cep: string;
   street: string;

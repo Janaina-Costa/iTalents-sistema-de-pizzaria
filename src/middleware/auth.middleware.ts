@@ -4,12 +4,15 @@ import jwt from "jsonwebtoken";
 
 import { SECRET_TOKEN } from "settings";
 
-import userService from "../service/user.service";
+import * as userService from "../service/user.service";
 
 const secret = SECRET_TOKEN;
+interface IGetUserAuthRequest extends Request {
+  userId: string;
+}
 
 const authUserMiddleware = (
-  req: Request,
+  req: IGetUserAuthRequest,
   res: Response,
   next: NextFunction,
 ) => {
