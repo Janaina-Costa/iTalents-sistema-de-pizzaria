@@ -5,8 +5,7 @@ export const findAllCartService = () => Cart.find();
 
 export const findCartByIdService = (id: string) => Cart.findById(id);
 
-export const createCartService = ({ ...cart }: ICart) =>
-  Cart.create({ ...cart });
+export const createCartService = (body: any) => Cart.create(body);
 
 export const updateCartService = (id: string, { ...cart }: ICart) =>
   Cart.findByIdAndUpdate(id, { ...cart }, { returnDocument: "after" });
