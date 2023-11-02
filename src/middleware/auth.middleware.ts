@@ -8,7 +8,7 @@ import * as userService from "../service/user.service";
 
 const secret = SECRET_TOKEN;
 interface IGetUserAuthRequest extends Request {
-  userId: string;
+  userId?: string;
 }
 
 const authUserMiddleware = (
@@ -37,7 +37,7 @@ const authUserMiddleware = (
     jwt.verify(token, secret, async (error, decoded) => {
       if (error) {
         console.log(`Erro: ${error}`);
-        res.status(500).send({ message: "Internal server error" });
+        return res.status(500).send({ message: "Token has expired" });
       }
       const { user: decodedId }: any = decoded;
 
@@ -51,7 +51,7 @@ const authUserMiddleware = (
     });
   } catch (err: any) {
     console.log(`Erro: ${err.message}`);
-    res.status(500).send({ message: "Internal server error" });
+    return res.status(500).send({ message: "Internal server error" });
   }
 };
 

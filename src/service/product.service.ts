@@ -1,4 +1,4 @@
-import { IProduct } from "interface/product";
+import { IProduct } from "types/interface/product";
 
 import Product from "../model/Product.Schema";
 
