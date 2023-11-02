@@ -45,5 +45,36 @@ export const removeUserAddressService = (id: string, addressId: string) =>
     },
   );
 
-export const addUserFavoriteItemService = () => {};
-export const removeUserFavoriteItemService = () => {};
+export const addUserFavoriteProductService = (id: string, product: any) =>
+  User.findByIdAndUpdate(
+    {
+      _id: id,
+    },
+    {
+      $push: {
+        favorite_product: { _id: String(product._id) },
+      },
+    },
+    {
+      includeResultMetadata: true,
+    },
+  );
+export const removeUserFavoriteProductService = (
+  id: string,
+  productId: string,
+) =>
+  User.findByIdAndUpdate(
+    {
+      _id: id,
+    },
+    {
+      $pull: {
+        favorite_product: {
+          _id: productId,
+        },
+      },
+    },
+    {
+      includeResultMetadata: true,
+    },
+  );

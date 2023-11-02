@@ -1,9 +1,8 @@
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable camelcase */
-/* eslint-disable no-console */
 import { Request, Response } from "express";
 
+import { FindAllProductsService } from "service/product.service";
 import * as userService from "service/user.service";
+import { IProduct } from "types/interface/product";
 import { IAdressUser, IUser } from "types/interface/user";
 
 export const findAllUserController = async (req: Request, res: Response) => {
@@ -142,7 +141,7 @@ export const removeUserAddressController = async (
   res: Response,
 ) => {
   try {
-    const { addressId, id } = req.body;
+    const { id, addressId } = req.body;
     const addressRemoved = await userService.removeUserAddressService(
       id,
       addressId,
@@ -151,10 +150,88 @@ export const removeUserAddressController = async (
       (item) => item._id === id,
     );
 
-    if (existsAddressId?.includes(true)) {
-      return res.status(201).send({ message: "Address removed successfully" });
+    if (!existsAddressId?.includes(true)) {
+      return res.status(400).send({ message: "Address not found" });
     }
-    return res.status(400).send({ message: "Address not found" });
+
+    return res.status(201).send({ message: "Address removed successfully" });
+  } catch (err: any) {
+    console.log(`Erro: ${err.message}`);
+    return res.status(500).send({ message: "Internal server error" });
+  }
+};
+
+export const addUserFavoriteProductController = async (
+  req: Request,
+  res: Response,
+) => {
+  try {
+    const favoriteProduct: IProduct = req.body;
+    const { id } = req.params;
+    const user = await userService.findUserByIdService(id);
+    const products = await FindAllProductsService();
+
+    if (!favoriteProduct._id) {
+      return res.status(400).send({ message: "Empty data is required" });
+    }
+
+    const productsId = products.map((item) => {
+      /* converte ObjectId em string */
+      const productId = String(item._id);
+      return productId === favoriteProduct._id;
+    });
+
+    if (!productsId.includes(true)) {
+      return res.status(400).send({ message: "Product not found" });
+    }
+    const favoriteProductAlreadyExists = user?.favorite_product.map((item) => {
+      if (item._id === undefined) {
+        return null;
+      }
+      /* converte ObjectId em string */
+      const favoriteId = String(item._id);
+      return favoriteId === favoriteProduct._id;
+    });
+
+    if (favoriteProductAlreadyExists?.includes(true)) {
+      return res
+        .status(400)
+        .send({ message: "Product has already add as favorite" });
+    }
+
+    await userService.addUserFavoriteProductService(id, favoriteProduct);
+    return res
+      .status(201)
+      .send({ message: "Favorite product added successfully" });
+  } catch (err: any) {
+    console.log(`Erro: ${err}`);
+    return res.status(500).send({ message: "Internal server error" });
+  }
+};
+
+export const removeUserFavoriteProductController = async (
+  req: Request,
+  res: Response,
+) => {
+  try {
+    const { id, productId } = req.body;
+
+    const favoriteProductRemoved =
+      await userService.removeUserFavoriteProductService(id, productId);
+
+    const favoriteProductExists =
+      favoriteProductRemoved.value?.favorite_product.map((item) => {
+        if (item._id === undefined) {
+          return null;
+        }
+        const product_Id = String(item._id);
+        return product_Id === productId;
+      });
+
+    if (!favoriteProductExists?.includes(true)) {
+      return res.status(400).send({ message: "Product not found" });
+    }
+    return res.status(201).send({ message: "Product removed successfully" });
   } catch (err: any) {
     console.log(`Erro: ${err.message}`);
     return res.status(500).send({ message: "Internal server error" });

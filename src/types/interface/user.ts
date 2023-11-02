@@ -9,9 +9,9 @@ export interface IAdressUser {
   neighborhood: string;
 }
 
-// interface IFavoriteItem {
-//   _id: string;
-// }
+export interface IFavoriteProduct {
+  _id: string;
+}
 
 export interface IUser extends Document {
   name: string;
@@ -20,5 +20,5 @@ export interface IUser extends Document {
   image: string;
   addresses: IAdressUser[];
   phone: string;
-  // favorite_item: IFavoriteItem[];
+  favorite_product: IFavoriteProduct[];
 }

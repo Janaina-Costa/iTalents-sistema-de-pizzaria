@@ -10,6 +10,8 @@ import {
   removeUserController,
   addUserAddressController,
   removeUserAddressController,
+  addUserFavoriteProductController,
+  removeUserFavoriteProductController,
 } from "../controller/user.controller";
 
 const router = express.Router();
@@ -33,5 +35,15 @@ router.delete(
   removeUserAddressController,
 );
 /* Rotas dos favoritos do usuário */
+router.post(
+  "/user/add-favorite/:id",
+  authUserMiddleware,
+  addUserFavoriteProductController,
+);
+router.delete(
+  "/user/remove-favorite",
+  authUserMiddleware,
+  removeUserFavoriteProductController,
+);
 
 export default router;

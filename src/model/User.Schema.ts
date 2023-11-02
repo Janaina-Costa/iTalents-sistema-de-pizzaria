@@ -17,16 +17,16 @@ const UserSchema = new Schema(
         number: { type: Number, required: true },
         complement: { type: String },
         neighborhood: { type: String, required: true },
-        createdAt: { type: Date, default: Date.now },
+        createdAt: { type: Date, default: Date.now() },
       },
     ],
-    // favorite_product: [
-    //   {
-    //     _id: Schema.Types.ObjectId,
-    //     unique: true,
-    //     ref: "products",
-    //   },
-    // ],
+    favorite_product: [
+      {
+        _id: { type: Schema.Types.ObjectId, unique: true, ref: "product" },
+
+        createdAt: { type: Date, default: Date.now() },
+      },
+    ],
     phone: { type: String, required: true },
   },
 
