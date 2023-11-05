@@ -1,7 +1,5 @@
 import express from "express";
 
-import authUserMiddleware from "middleware/auth.middleware";
-
 import {
   findAllUserController,
   createUserController,
@@ -12,7 +10,8 @@ import {
   removeUserAddressController,
   addUserFavoriteProductController,
   removeUserFavoriteProductController,
-} from "../controller/user.controller";
+} from "controller/user.controller";
+import authUserMiddleware from "middleware/auth.middleware";
 
 const router = express.Router();
 

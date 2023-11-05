@@ -8,8 +8,13 @@ interface IGetUserAuthRequest extends Request {
 }
 
 export const findAllCartController = async (req: Request, res: Response) => {
-  const carts = await cartService.findAllCartService();
-  return res.status(200).send(carts);
+  try {
+    const carts = await cartService.findAllCartService();
+    return res.status(200).send(carts);
+  } catch (err: any) {
+    console.log(`Erro: ${err.message}`);
+    return res.status(500).send({ message: "Internal server error" });
+  }
 };
 
 export const findCartByIdController = async (req: Request, res: Response) => {
