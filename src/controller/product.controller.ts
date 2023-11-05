@@ -37,16 +37,6 @@ export const findProductByIdController = async (
 export const createProductController = async (req: Request, res: Response) => {
   const product: IProduct = req.body;
   try {
-    if (
-      !product.name ||
-      !product.description ||
-      !product.image ||
-      !product.size ||
-      !product.price
-    ) {
-      return res.status(400).send({ message: "Empty data is required" });
-    }
-
     const newProduct = await productService.createProductService(product);
 
     return res

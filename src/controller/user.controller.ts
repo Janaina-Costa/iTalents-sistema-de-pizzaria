@@ -37,11 +37,6 @@ export const findUserByIdController = async (req: Request, res: Response) => {
 export const createUserController = async (req: Request, res: Response) => {
   try {
     const user: IUser = req.body;
-
-    if (!user.name || !user.email || !user.password || !user.phone) {
-      return res.status(400).send({ message: "Empty data is required" });
-    }
-
     const newUser = await userService.createUserService(user);
 
     return res
@@ -61,6 +56,7 @@ export const updateUserController = async (req: Request, res: Response) => {
     const user: IUser = req.body;
 
     const updatedUser = await userService.updateUserService(id, user);
+
     if (updatedUser?.id !== id) {
       return res.status(400).send({ message: "Product not found" });
     }

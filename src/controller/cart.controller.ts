@@ -42,7 +42,6 @@ export const createCartController = async (
       ...cart,
       userId: req.userId,
     };
-    console.log(req.userId);
 
     await cartService.createCartService(cartBody);
 

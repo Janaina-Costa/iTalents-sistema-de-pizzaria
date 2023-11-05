@@ -12,13 +12,14 @@ import {
   removeUserFavoriteProductController,
 } from "controller/user.controller";
 import authUserMiddleware from "middleware/auth.middleware";
+import { validateUser } from "middleware/validation.middleware";
 
 const router = express.Router();
 
 /* Rotas do usuário */
 router.get("/users", findAllUserController);
 router.get("/user/:id", findUserByIdController);
-router.post("/user/create", createUserController);
+router.post("/user/create", validateUser, createUserController);
 router.put("/user/update/:id", authUserMiddleware, updateUserController);
 router.delete("/user/remove/:id", removeUserController);
 
