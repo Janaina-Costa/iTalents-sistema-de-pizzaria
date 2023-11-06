@@ -4,7 +4,7 @@ import { isValidObjectId } from "mongoose";
 import { ICart } from "types/interface/cart";
 import { IOrder } from "types/interface/order";
 import { IProduct } from "types/interface/product";
-import { IAdressUser, IUser } from "types/interface/user";
+import { IAdressUser, IFavoriteProduct, IUser } from "types/interface/user";
 
 export const validateUser = (
   req: Request,
@@ -65,6 +65,23 @@ export const validateUserAddress = (
     return res
       .status(400)
       .send({ message: `Empty ${error} data are required` });
+  }
+  return res.status(400).send({ message: `Empty ${error} data is required` });
+};
+
+export const validateFavoriteProduct = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const favoriteProduct: IFavoriteProduct = req.body;
+  const error = [];
+
+  if (!favoriteProduct._id) {
+    error.push("id");
+  }
+  if (error.length === 0) {
+    return next();
   }
   return res.status(400).send({ message: `Empty ${error} data is required` });
 };

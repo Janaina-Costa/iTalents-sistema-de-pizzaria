@@ -8,6 +8,9 @@ import { IAdressUser, IUser } from "types/interface/user";
 export const findAllUserController = async (req: Request, res: Response) => {
   try {
     const user = await userService.finAllUsersService();
+    if (!user) {
+      return null;
+    }
     return res.status(200).send(user);
   } catch (err: any) {
     console.log(`Erro: ${err.message}`);
@@ -21,7 +24,7 @@ export const findUserByIdController = async (req: Request, res: Response) => {
     const user = await userService.findUserByIdService(id);
 
     if (user?.id !== id) {
-      return res.status(404).send({ message: "Id not found" });
+      return res.status(404).send({ message: "User not found" });
     }
 
     return res.status(200).send(user);
@@ -86,6 +89,10 @@ export const addUserAddressController = async (req: Request, res: Response) => {
     const { id } = req.params;
     const user = await userService.findUserByIdService(id);
 
+    if (!user) {
+      return res.status(404).send({ message: "User not found" });
+    }
+    // valida se o endereço já está registrado
     const zipCodeAlreadyExistis = user?.addresses.map(
       (item) =>
         item.cep === addresses.cep &&
@@ -97,9 +104,6 @@ export const addUserAddressController = async (req: Request, res: Response) => {
       return res
         .status(400)
         .send({ message: "Address has already registered" });
-    }
-    if (!user) {
-      return res.status(404).send({ message: "User not found" });
     }
 
     await userService.addUserAddressService(id, addresses);
@@ -143,13 +147,13 @@ export const addUserFavoriteProductController = async (
   try {
     const favoriteProduct: IProduct = req.body;
     const { id } = req.params;
+
     const user = await userService.findUserByIdService(id);
     const products = await FindAllProductsService();
 
-    if (!favoriteProduct._id) {
-      return res.status(400).send({ message: "Empty data is required" });
+    if (!user) {
+      return res.status(404).send({ message: "User not found" });
     }
-
     const productsId = products.map((item) => {
       /* converte ObjectId em string */
       const productId = String(item._id);

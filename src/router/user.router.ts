@@ -13,6 +13,7 @@ import {
 } from "controller/user.controller";
 import authUserMiddleware from "middleware/auth.middleware";
 import {
+  validateFavoriteProduct,
   validateId,
   validateUser,
   validateUserAddress,
@@ -50,6 +51,7 @@ router.post(
   "/user/add-favorite/:id",
   authUserMiddleware,
   validateId,
+  validateFavoriteProduct,
   addUserFavoriteProductController,
 );
 router.delete(
