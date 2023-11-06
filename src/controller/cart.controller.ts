@@ -22,11 +22,12 @@ export const findCartByIdController = async (req: Request, res: Response) => {
     const { id } = req.params;
     const cart = await cartService.findCartByIdService(id);
 
+    if (!cart) {
+      return res.status(404).send({ message: "Cart not found" });
+    }
+
     return res.status(200).send(cart);
   } catch (err: any) {
-    if (err.kind === "ObjectId") {
-      return res.status(400).send({ message: "Id is incorrect" });
-    }
     console.log(`Erro: ${err.message}`);
     return res.status(500).send({ message: "Internal server error" });
   }
@@ -61,9 +62,6 @@ export const updateCartController = async (req: Request, res: Response) => {
 
     return res.status(200).send({ message: "Cart updated successfully" });
   } catch (err: any) {
-    if (err.kind === "ObjectId") {
-      return res.status(400).send({ message: "Id not found" });
-    }
     console.log(`Erro: ${err.message}`);
     return res.status(500).send({ message: "Internal server error" });
   }
@@ -76,9 +74,6 @@ export const removeCartController = async (req: Request, res: Response) => {
 
     return res.status(201).send({ message: "Cart deleted successfully" });
   } catch (err: any) {
-    if (err.kind === "ObjectId") {
-      return res.status(400).send({ message: "Id not found" });
-    }
     console.log(`Erro: ${err.message}`);
     return res.status(500).send({ message: "Internal server error" });
   }

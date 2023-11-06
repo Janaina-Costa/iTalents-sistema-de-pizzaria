@@ -1,7 +1,7 @@
 import { Document } from "mongoose";
 
 export interface IAdressUser {
-  [x: string]: any;
+  _id?: string;
   cep: string;
   street: string;
   number: number;

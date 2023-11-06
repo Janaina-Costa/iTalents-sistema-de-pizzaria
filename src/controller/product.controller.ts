@@ -88,9 +88,6 @@ export const removeProductController = async (req: Request, res: Response) => {
     }
     return res.status(200).send({ message: "Product removed successfully" });
   } catch (err: any) {
-    if (err.kind === "ObjectId") {
-      return res.status(400).send({ message: "Id not found" });
-    }
     console.log(`Erro: ${err.message}`);
     return res.status(500).send({ message: "Internal server error" });
   }

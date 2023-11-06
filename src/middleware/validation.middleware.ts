@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from "express";
+import { isValidObjectId } from "mongoose";
 
 import { ICart } from "types/interface/cart";
 import { IOrder } from "types/interface/order";
 import { IProduct } from "types/interface/product";
-import { IUser } from "types/interface/user";
+import { IAdressUser, IUser } from "types/interface/user";
 
 export const validateUser = (
   req: Request,
@@ -26,6 +27,37 @@ export const validateUser = (
     error.push("phone");
   }
 
+  if (error.length === 0) {
+    return next();
+  }
+  if (error.length > 1) {
+    return res
+      .status(400)
+      .send({ message: `Empty ${error} data are required` });
+  }
+  return res.status(400).send({ message: `Empty ${error} data is required` });
+};
+
+export const validateUserAddress = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const address: IAdressUser = req.body;
+  const error = [];
+
+  if (!address.cep) {
+    error.push("cep");
+  }
+  if (!address.street) {
+    error.push("street");
+  }
+  if (!address.number) {
+    error.push("number");
+  }
+  if (!address.neighborhood) {
+    error.push("neighborhood");
+  }
   if (error.length === 0) {
     return next();
   }
@@ -109,14 +141,21 @@ export const validateOrder = (
   if (!order.deliveryValue) {
     error.push("deliveryValue");
   }
-  if (!order)
-    if (error.length === 0) {
-      return next();
-    }
+
+  if (error.length === 0) {
+    return next();
+  }
   if (error.length > 1) {
     return res
       .status(400)
       .send({ message: `Empty ${error} data are required` });
   }
   return res.status(400).send({ message: `Empty ${error} data is required` });
+};
+
+export const validateId = (req: Request, res: Response, next: NextFunction) => {
+  if (isValidObjectId(req.params.id)) {
+    return next();
+  }
+  return res.status(400).send({ message: "Incorrect Id" });
 };

@@ -8,23 +8,34 @@ import {
   updateStatusOrderController,
 } from "controller/order.controller";
 import authUserMiddleware from "middleware/auth.middleware";
-import { validateOrder } from "middleware/validation.middleware";
+import { validateId, validateOrder } from "middleware/validation.middleware";
 
 const router = express.Router();
 
-router.get("/orders", findAllOrdersController);
-router.get("/order/:id", findOrderByIdController);
+router.get("/orders", authUserMiddleware, findAllOrdersController);
+router.get(
+  "/order/:id",
+  authUserMiddleware,
+  validateId,
+  findOrderByIdController,
+);
 router.post(
   "/order/create",
   authUserMiddleware,
   validateOrder,
   createOrdersController,
 );
-router.delete("/order/remove/:id", authUserMiddleware, removeOrderController);
+router.delete(
+  "/order/remove/:id",
+  authUserMiddleware,
+  validateId,
+  removeOrderController,
+);
 
 router.patch(
   "/order/updateStatus/:id",
   authUserMiddleware,
+  validateId,
   updateStatusOrderController,
 );
 

@@ -21,14 +21,11 @@ export const findUserByIdController = async (req: Request, res: Response) => {
     const user = await userService.findUserByIdService(id);
 
     if (user?.id !== id) {
-      return res.status(400).send({ message: "Id not found" });
+      return res.status(404).send({ message: "Id not found" });
     }
 
     return res.status(200).send(user);
   } catch (err: any) {
-    if (err.kind === "ObjectId") {
-      return res.status(400).send({ message: "Id is incorrect" });
-    }
     console.log(`Erro: ${err.message}`);
     return res.status(500).send({ message: "Internal server error" });
   }
@@ -37,11 +34,9 @@ export const findUserByIdController = async (req: Request, res: Response) => {
 export const createUserController = async (req: Request, res: Response) => {
   try {
     const user: IUser = req.body;
-    const newUser = await userService.createUserService(user);
+    await userService.createUserService(user);
 
-    return res
-      .status(201)
-      .send({ newUser, message: "User created successfully" });
+    return res.status(201).send({ message: "User created successfully" });
   } catch (err: any) {
     if (err.code === 11000) {
       return res.status(400).send({ message: "User already existis!" });
@@ -58,16 +53,13 @@ export const updateUserController = async (req: Request, res: Response) => {
     const updatedUser = await userService.updateUserService(id, user);
 
     if (updatedUser?.id !== id) {
-      return res.status(400).send({ message: "Product not found" });
+      return res.status(404).send({ message: "User not found" });
     }
 
     return res
       .status(200)
       .send({ updatedUser, message: "User updated successfully" });
   } catch (err: any) {
-    if (err.kind === "ObjectId") {
-      return res.status(400).send({ message: "Id not found" });
-    }
     console.log(`Erro: ${err.message}`);
     return res.status(500).send({ message: "Internal server error" });
   }
@@ -77,14 +69,12 @@ export const removeUserController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const user = await userService.removeUserService(id);
+
     if (!user) {
-      return res.status(400).send({ message: "User does not exist" });
+      return res.status(404).send({ message: "User does not exist" });
     }
     return res.status(200).send({ message: "User removed successfully" });
   } catch (err: any) {
-    if (err.kind === "ObjectId") {
-      return res.status(400).send({ message: "Id not found" });
-    }
     console.log(`Erro: ${err.message}`);
     return res.status(500).send({ message: "Internal server error" });
   }
@@ -96,14 +86,6 @@ export const addUserAddressController = async (req: Request, res: Response) => {
     const { id } = req.params;
     const user = await userService.findUserByIdService(id);
 
-    if (
-      !addresses.cep ||
-      !addresses.street ||
-      !addresses.number ||
-      !addresses.neighborhood
-    ) {
-      return res.status(400).send({ message: "Empty data is required" });
-    }
     const zipCodeAlreadyExistis = user?.addresses.map(
       (item) =>
         item.cep === addresses.cep &&
@@ -116,16 +98,12 @@ export const addUserAddressController = async (req: Request, res: Response) => {
         .status(400)
         .send({ message: "Address has already registered" });
     }
-
-    const newAddress = await userService.addUserAddressService(id, addresses);
-
-    if (newAddress.ok === 1) {
-      return res.status(201).send({ message: "Address added successfully" });
+    if (!user) {
+      return res.status(404).send({ message: "User not found" });
     }
 
-    return res
-      .status(400)
-      .send({ message: "Something wrong when entering the address" });
+    await userService.addUserAddressService(id, addresses);
+    return res.status(201).send({ message: "Address added successfully" });
   } catch (err: any) {
     console.log(`Erro: ${err.message}`);
     return res.status(500).send({ message: "Internal server error" });
@@ -138,17 +116,18 @@ export const removeUserAddressController = async (
 ) => {
   try {
     const { id, addressId } = req.body;
-    const addressRemoved = await userService.removeUserAddressService(
-      id,
-      addressId,
-    );
-    const existsAddressId = addressRemoved.value?.addresses.map(
-      (item) => item._id === id,
+    const user = await userService.findUserByIdService(id);
+
+    // valida se o id do endereço a ser removido existe para o usuário informado
+    const addressExists = user?.addresses.map(
+      (item) => String(item._id) === addressId,
     );
 
-    if (!existsAddressId?.includes(true)) {
-      return res.status(400).send({ message: "Address not found" });
+    if (!addressExists?.includes(true)) {
+      return res.status(404).send({ message: "Address not found" });
     }
+
+    await userService.removeUserAddressService(id, addressId);
 
     return res.status(201).send({ message: "Address removed successfully" });
   } catch (err: any) {
@@ -178,7 +157,7 @@ export const addUserFavoriteProductController = async (
     });
 
     if (!productsId.includes(true)) {
-      return res.status(400).send({ message: "Product not found" });
+      return res.status(404).send({ message: "Product not found" });
     }
     const favoriteProductAlreadyExists = user?.favorite_product.map((item) => {
       if (item._id === undefined) {
@@ -225,7 +204,7 @@ export const removeUserFavoriteProductController = async (
       });
 
     if (!favoriteProductExists?.includes(true)) {
-      return res.status(400).send({ message: "Product not found" });
+      return res.status(404).send({ message: "Product not found" });
     }
     return res.status(201).send({ message: "Product removed successfully" });
   } catch (err: any) {

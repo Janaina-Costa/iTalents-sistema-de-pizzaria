@@ -8,19 +8,24 @@ import {
   updateCartController,
 } from "controller/cart.controller";
 import authUserMiddleware from "middleware/auth.middleware";
-import { validateCart } from "middleware/validation.middleware";
+import { validateCart, validateId } from "middleware/validation.middleware";
 
 const router = express.Router();
 
-router.get("/carts", findAllCartController);
-router.get("/cart/:id", findCartByIdController);
-router.post(
-  "/cart/create",
+router.get("/carts", authUserMiddleware, findAllCartController);
+router.get("/cart/:id", authUserMiddleware, validateId, findCartByIdController);
+router.post("/cart/create", authUserMiddleware, createCartController);
+router.put(
+  "/cart/update/:id",
   authUserMiddleware,
   validateCart,
-  createCartController,
+  updateCartController,
 );
-router.put("/cart/update/:id", authUserMiddleware, updateCartController);
-router.delete("/cart/remove/:id", authUserMiddleware, removeCartController);
+router.delete(
+  "/cart/remove/:id",
+  authUserMiddleware,
+  validateId,
+  removeCartController,
+);
 
 export default router;

@@ -21,6 +21,9 @@ export const findOrderByIdController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const order = await orderService.findOrderByIdService(id);
+    if (!order) {
+      return res.status(404).send({ message: "Order not found or not exists" });
+    }
     return res.status(200).send(order);
   } catch (err: any) {
     if (err.kind === "ObjectId") {
@@ -53,6 +56,10 @@ export const createOrdersController = async (
 export const removeOrderController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+    const order = await orderService.findOrderByIdService(id);
+    if (!order) {
+      return res.status(404).send({ message: "Order not found or not exists" });
+    }
     await orderService.deleteOrderService(id);
 
     return res.status(200).send({ message: "Order removed successfully" });
@@ -71,7 +78,10 @@ export const updateStatusOrderController = async (
 ) => {
   try {
     const { id } = req.params;
-    await orderService.updateStatusOrderService(id);
+    const statusId = await orderService.updateStatusOrderService(id);
+    if (!statusId) {
+      return res.status(404).send({ message: "Order not found or not exists" });
+    }
 
     return res.status(200).send({ message: "Status updated successfully" });
   } catch (err: any) {
