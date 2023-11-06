@@ -12,6 +12,7 @@ const loginUserController = async (req: Request, res: Response) => {
     const user: IUser = req.body;
     const userLogin = await loginUserService.login(user.email);
 
+    // verificação de email e senha incorretos
     if (!user.email || user.password !== userLogin?.password) {
       return res
         .status(400)
