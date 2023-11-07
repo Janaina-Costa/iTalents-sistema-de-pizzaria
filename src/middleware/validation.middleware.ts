@@ -1,6 +1,8 @@
+/* eslint-disable array-callback-return */
 import { NextFunction, Request, Response } from "express";
 import { isValidObjectId } from "mongoose";
 
+import ProductSizes from "types/enums/products";
 import { ICart } from "types/interface/cart";
 import { IOrder } from "types/interface/order";
 import { IProduct } from "types/interface/product";
@@ -117,6 +119,29 @@ export const validateProduct = (
       .send({ message: `Empty ${error} data are required` });
   }
   return res.status(400).send({ message: `Empty ${error} data is required` });
+};
+
+export const validateProductBody = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const product: IProduct = req.body;
+  const { size } = product;
+
+  const enumSize = [ProductSizes].map(
+    (item) =>
+      item.P === size || item.M === size || item.G === size || item.GG === size,
+  );
+
+  if (!size) {
+    return next();
+  }
+
+  if (enumSize.includes(false)) {
+    return res.status(404).send({ message: `${size} is not a valid size` });
+  }
+  return next();
 };
 
 export const validateCart = (

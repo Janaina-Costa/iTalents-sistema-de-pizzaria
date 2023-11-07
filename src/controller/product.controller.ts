@@ -37,12 +37,11 @@ export const findProductByIdController = async (
 export const createProductController = async (req: Request, res: Response) => {
   const product: IProduct = req.body;
   try {
-    const newProduct = await productService.createProductService(product);
+    await productService.createProductService(product);
 
-    return res
-      .status(201)
-      .send({ newProduct, message: "Product created successfully" });
+    return res.status(201).send({ message: "Product created successfully" });
   } catch (err: any) {
+    console.log(String(err.message));
     if (err.code === 11000) {
       return res.status(400).send({ message: "Product already existis!" });
     }

@@ -23,6 +23,7 @@ export const findUserByIdController = async (req: Request, res: Response) => {
     const { id } = req.params;
     const user = await userService.findUserByIdService(id);
 
+    // verifica se o id digitado corresponde a um id existente
     if (user?.id !== id) {
       return res.status(404).send({ message: "User not found" });
     }

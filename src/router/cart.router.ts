@@ -14,7 +14,12 @@ const router = express.Router();
 
 router.get("/carts", authUserMiddleware, findAllCartController);
 router.get("/cart/:id", authUserMiddleware, validateId, findCartByIdController);
-router.post("/cart/create", authUserMiddleware, createCartController);
+router.post(
+  "/cart/create",
+  authUserMiddleware,
+  validateCart,
+  createCartController,
+);
 router.put(
   "/cart/update/:id",
   authUserMiddleware,

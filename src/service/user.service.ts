@@ -59,6 +59,7 @@ export const addUserFavoriteProductService = (id: string, product: any) =>
       includeResultMetadata: true,
     },
   );
+
 export const removeUserFavoriteProductService = (
   id: string,
   productId: string,
