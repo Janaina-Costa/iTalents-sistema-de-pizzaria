@@ -7,12 +7,7 @@ import routes from "./router/router";
 
 const server = express();
 server.use(express.json());
-server.use(
-  cors({
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-  }),
-);
+server.use(cors());
 server.use("/", routes);
 
 const PORT = 3006;

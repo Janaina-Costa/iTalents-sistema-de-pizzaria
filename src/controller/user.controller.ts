@@ -9,7 +9,7 @@ export const findAllUserController = async (req: Request, res: Response) => {
   try {
     const user = await userService.finAllUsersService();
     if (!user) {
-      return null;
+      return res.status(404).send({ message: "User not found" });
     }
     return res.status(200).send(user);
   } catch (err: any) {
