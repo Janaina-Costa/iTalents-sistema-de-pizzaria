@@ -18,21 +18,73 @@
   "paths":{
     "/users":{
       "get":{
+        "security":[
+          {
+            "bearerAuth":[]
+          }
+        ],
         "summary":"Lista todos os usuários da API",
         "description":"Rota responsável por listar todos os usuários da api",
-        "tags":["Usuário"],
+        "tags":["Usuario"],
         "response":{
           "200":{
-            "description":"OK!"
+            "description":"OK!",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "type": "array",
+                  "items":{
+                    "type":"object",
+                    "ref":"#/components/schemas/Usuario"
+                  }
+                }
+              }
+            }
           },
           "401":{
-            "description":"Unauthorized: Erro de autenticação"
+            "description":"Unauthorized: Erro de autenticação",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "type": "object",
+                  "properties":{
+                    "message":{
+                      "type":"string"
+                    }
+                  }
+                }
+              }
+            }
           },
           "404":{
-            "description":"Not Found: Nenhum usuário encontrado"
+            "description":"Not Found: Nenhum usuário encontrado",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "type": "object",
+                  "properties":{
+                    "message":{
+                      "type":"string"
+                    }
+                  }
+                }
+              }
+            }
           },
           "500":{
-            "description":"Erro interno do servidor"
+            "description":"Erro interno do servidor",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "type": "object",
+                  "properties":{
+                    "message":{
+                      "type":"string"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -41,7 +93,72 @@
       "get":{
         "summary":"Lista um usuário especifico por ID",
         "description":"Rota responsável por localizar um usuário especifico por ID",
-        "tags":["Usuário"]
+        "tags":["Usuario"]
+      }
+    }
+  },
+  "components":{
+    "securitySchemas":{
+      "bearerAuth":{
+        "type":"http",
+        "schema":"bearer",
+        "bearerFormat":"JWT"
+      }
+    },
+    "schemas":{
+      "Usuario":{
+        "type":"object",
+        "properties":{
+          "name":{
+            "type":"string"
+          },
+          "email":{
+            "type":"string"
+          },
+          "password":{
+            "type":"string"
+          },
+          "image":{
+            "type":"string"
+          },
+          "addresses":{
+            "type":"array",
+            "items":{
+              "properties":{
+                "cep":{
+                  "type":"string"
+                },
+                "street":{
+                  "type":"string"
+                },
+                "number":{
+                  "type":"number"
+                },
+                "complement":{
+                  "type":"string"
+                },
+                "neighborhood":{
+                  "type":"string"
+                },
+                "createAt":"string"
+              }
+            }
+          },
+          "favorite_product":{
+            "type":"array",
+            "items":{
+              "properties":{
+                "_id":{
+                  "type":"string"
+                },
+                "createAt":{
+                  "type":"string"
+                }
+              }
+            }
+          },
+          "admin":"boolean"
+        }
       }
     }
   }
