@@ -393,6 +393,362 @@
         }
       }
     },
+    "/user/createAddress/{id}": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Cria endereço para o usuário",
+        "description": "Rota responsável adicionar um endereço para o usuário",
+        "tags": [
+          "Endereços"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "required": true,
+            "scheme": {
+              "type": "string"
+            },
+            "name": "id"
+          },
+          {
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/user"
+            },
+            "name": "body"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Adiciona endereço para um usuário",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/user"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erro de autenticação, problema com o Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found, objeto não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/removeAddress": {
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Remove endereço do usuário",
+        "description": "Rota responsável remover um endereço para o usuário informado",
+        "tags": [
+          "Endereços"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/user"
+            },
+            "name": "body"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário com endereço removido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/user"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erro de autenticação, problema com o Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found, objeto não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/add-favorite/{id}": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Cria produto favorito para o usuário",
+        "description": "Rota responsável adicionar um produto favorito para o usuário",
+        "tags": [
+          "Produtos_Favoritos"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "required": true,
+            "scheme": {
+              "type": "string"
+            },
+            "name": "id"
+          },
+          {
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/user"
+            },
+            "name": "body"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Adiciona um produto favorito para o usuário",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/user"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erro de autenticação, problema com o Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found, objeto não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/remove-favorite": {
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Remove um produto favorito do usuário",
+        "description": "Rota responsável remover um produto favorito para o usuário informado",
+        "tags": [
+          "Produtos_Favoritos"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/user"
+            },
+            "name": "body"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário com produto favorito removido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/user"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erro de autenticação, problema com o Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found, objeto não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/products": {
       "get": {
         "summary": "Lista todos os produtos",
@@ -614,8 +970,8 @@
           "200": {
             "description": "Retorna o produto atualizado no banco de dados"
           },
-          "401": {
-            "description": "Erro de autenticação, problema com o Token",
+          "400": {
+            "description": "Erro na requisição",
             "content": {
               "application/json": {
                 "schema": {
@@ -629,8 +985,8 @@
               }
             }
           },
-          "400": {
-            "description": "Erro na requisição",
+          "401": {
+            "description": "Erro de autenticação, problema com o Token",
             "content": {
               "application/json": {
                 "schema": {
@@ -688,8 +1044,8 @@
           "200": {
             "description": "Deleta produto no banco de dados"
           },
-          "401": {
-            "description": "Erro de autenticação, problema com o Token",
+          "400": {
+            "description": "Erro na requisição",
             "content": {
               "application/json": {
                 "schema": {
@@ -703,8 +1059,8 @@
               }
             }
           },
-          "400": {
-            "description": "Erro na requisição",
+          "401": {
+            "description": "Erro de autenticação, problema com o Token",
             "content": {
               "application/json": {
                 "schema": {
@@ -1198,8 +1554,8 @@
               }
             }
           },
-          "401": {
-            "description": "Erro de autenticação, problema com o Token",
+          "400": {
+            "description": "Erro na requisição",
             "content": {
               "application/json": {
                 "schema": {
@@ -1213,8 +1569,8 @@
               }
             }
           },
-          "400": {
-            "description": "Erro na requisição",
+          "401": {
+            "description": "Erro de autenticação, problema com o Token",
             "content": {
               "application/json": {
                 "schema": {
@@ -1637,47 +1993,85 @@
           "name": {
             "type": "string"
           },
-          "cpf": {
-            "type": "string"
-          },
           "email": {
             "type": "string"
           },
           "password": {
             "type": "string"
           },
+          "image":{
+            "type":"string"
+          },
+          "phone":{
+            "type":"string"
+          },
+          "addresses":{
+            "type":"array",
+            "items":{
+              "properties":{
+                "cep":{
+                  "type":"string"
+                },
+                "street":{
+                  "type":"string"
+                },
+                "number":{
+                  "type":"number"
+                },
+                "complement":{
+                  "type":"string"
+                },
+                "neighborhood":{
+                  "type":"string"
+                },
+                "createdAt":{
+                  "type":"string"
+                }
+              }
+            }
+          },
+          "favorite_product":{
+            "type":"array",
+            "items":{
+              "properties":{
+                "_id":{
+                  "type":"string"
+                }
+              },
+              "createdAt":{
+                "type":"string"
+              }
+            }
+          },
           "isAdmin": {
             "type": "boolean"
-          },
-          "address": {
-            "type": "string"
-          },
-          "createdAt": {
-            "type": "string"
           }
         }
       },
-      "pizza": {
+      "product": {
         "type": "object",
         "properties": {
           "name": {
             "type": "string"
+          },
+          "description":{
+            "type":"string"
+          },
+          "image":{
+            "type":"string"
           },
           "size": {
             "type": "string"
           },
           "price": {
             "type": "number"
-          },
-          "createdAt": {
-            "type": "string"
           }
         }
       },
       "cart": {
         "type": "object",
         "properties": {
-          "pizzas": {
+          "products": {
             "type": "array",
             "items": {
               "properties": {
@@ -1690,13 +2084,10 @@
               }
             }
           },
-          "createdAt": {
-            "type": "string"
-          },
           "totalPrice": {
             "type": "number"
           },
-          "freigth": {
+          "deliveryValue": {
             "type": "number"
           },
           "userId": {
@@ -1707,7 +2098,7 @@
       "order": {
         "type": "object",
         "properties": {
-          "pizzas": {
+          "products": {
             "type": "array",
             "items": {
               "properties": {
@@ -1720,19 +2111,16 @@
               }
             }
           },
-          "createdAt": {
-            "type": "string"
-          },
           "totalPrice": {
             "type": "number"
           },
-          "freigth": {
+          "deliveryValue": {
             "type": "number"
           },
           "userId": {
             "type": "string"
           },
-          "close": {
+          "orderCompleted": {
             "type": "boolean"
           }
         }
