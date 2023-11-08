@@ -418,7 +418,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/user"
+              "$ref": "#/components/schemas/addAddress"
             },
             "name": "body"
           }
@@ -503,7 +503,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/user"
+              "$ref": "#/components/schemas/addAddress"
             },
             "name": "body"
           }
@@ -596,7 +596,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/user"
+              "$ref": "#/components/schemas/addFavoritesProducts"
             },
             "name": "body"
           }
@@ -681,7 +681,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/user"
+              "$ref": "#/components/schemas/addFavoritesProducts"
             },
             "name": "body"
           }
@@ -765,7 +765,7 @@
                   "type": "array",
                   "items": {
                     "type": "object",
-                    "$ref": "#/components/schemas/pizza"
+                    "$ref": "#/components/schemas/product"
                   }
                 }
               }
@@ -828,7 +828,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "$ref": "#/components/schemas/pizza"
+                  "$ref": "#/components/schemas/product"
                 }
               }
             }
@@ -883,7 +883,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/pizza"
+              "$ref": "#/components/schemas/product"
             },
             "name": "body"
           }
@@ -897,7 +897,7 @@
                   "type": "array",
                   "items": {
                     "type": "object",
-                    "$ref": "#/components/schemas/pizza"
+                    "$ref": "#/components/schemas/product"
                   }
                 }
               }
@@ -961,7 +961,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/pizza"
+              "$ref": "#/components/schemas/product"
             },
             "name": "body"
           }
@@ -1265,7 +1265,7 @@
                   "type": "array",
                   "items": {
                     "type": "object",
-                    "$ref": "#/components/schemas/pizza"
+                    "$ref": "#/components/schemas/cart"
                   }
                 }
               }
@@ -2047,6 +2047,44 @@
             "type": "boolean"
           }
         }
+      },
+      "addAddress":{
+        "type":"array",
+            "items":{
+              "properties":{
+                "cep":{
+                  "type":"string"
+                },
+                "street":{
+                  "type":"string"
+                },
+                "number":{
+                  "type":"number"
+                },
+                "complement":{
+                  "type":"string"
+                },
+                "neighborhood":{
+                  "type":"string"
+                },
+                "createdAt":{
+                  "type":"string"
+                }
+              }
+            }
+      },
+      "addFavoritesProducts":{
+        "type":"array",
+            "items":{
+              "properties":{
+                "_id":{
+                  "type":"string"
+                }
+              },
+              "createdAt":{
+                "type":"string"
+              }
+            }
       },
       "product": {
         "type": "object",
