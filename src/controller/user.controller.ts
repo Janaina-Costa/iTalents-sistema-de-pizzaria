@@ -134,7 +134,7 @@ export const removeUserAddressController = async (
 
     await userService.removeUserAddressService(id, addressId);
 
-    return res.status(201).send({ message: "Address removed successfully" });
+    return res.status(200).send({ message: "Address removed successfully" });
   } catch (err: any) {
     console.log(`Erro: ${err.message}`);
     return res.status(500).send({ message: "Internal server error" });
@@ -211,7 +211,7 @@ export const removeUserFavoriteProductController = async (
     if (!favoriteProductExists?.includes(true)) {
       return res.status(404).send({ message: "Product not found" });
     }
-    return res.status(201).send({ message: "Product removed successfully" });
+    return res.status(200).send({ message: "Product removed successfully" });
   } catch (err: any) {
     console.log(`Erro: ${err.message}`);
     return res.status(500).send({ message: "Internal server error" });

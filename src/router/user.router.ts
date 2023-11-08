@@ -22,8 +22,8 @@ import {
 const router = express.Router();
 
 /* Rotas do usuário */
-router.get("/users", findAllUserController);
-router.get("/user/:id", validateId, findUserByIdController);
+router.get("/users", authUserMiddleware, findAllUserController);
+router.get("/user/:id", authUserMiddleware, validateId, findUserByIdController);
 router.post("/user/create", validateUser, createUserController);
 router.put(
   "/user/update/:id",
@@ -31,7 +31,12 @@ router.put(
   validateId,
   updateUserController,
 );
-router.delete("/user/remove/:id", validateId, removeUserController);
+router.delete(
+  "/user/remove/:id",
+  authUserMiddleware,
+  validateId,
+  removeUserController,
+);
 
 /* Rotas do endereço do usuário */
 router.post(

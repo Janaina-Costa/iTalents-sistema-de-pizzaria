@@ -9,6 +9,9 @@ export const findAllProductsController = async (
 ) => {
   try {
     const products = await productService.FindAllProductsService();
+    if (!products) {
+      return res.status(400);
+    }
     return res.status(200).send(products);
   } catch (err: any) {
     console.log(`Erro: ${err.message}`);
@@ -25,7 +28,7 @@ export const findProductByIdController = async (
 
     const product = await productService.findProductByIdService(id);
     if (id !== product?.id) {
-      return res.status(400).send({ message: "Product not found" });
+      return res.status(404).send({ message: "Product not found" });
     }
     return res.status(200).send(product);
   } catch (err: any) {
