@@ -48,6 +48,7 @@ export const createCartController = async (
     };
     const cartProductId = cartBody?.products.map((p) => p._id);
 
+    // verifica se o produto que se quer alterar existe no carrinho selecionado
     const existisProductId = product.map(
       (item) => String(cartProductId) === item.id,
     );
