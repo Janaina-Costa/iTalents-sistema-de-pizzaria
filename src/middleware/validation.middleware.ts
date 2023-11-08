@@ -3,10 +3,19 @@ import { NextFunction, Request, Response } from "express";
 import { isValidObjectId } from "mongoose";
 
 import ProductSizes from "types/enums/products";
-import { ICart } from "types/interface/cart";
-import { IOrder } from "types/interface/order";
 import { IProduct } from "types/interface/product";
 import { IAdressUser, IFavoriteProduct, IUser } from "types/interface/user";
+
+interface ICartOrderBody {
+  products: [
+    {
+      _id: string;
+      quantity: number;
+    },
+  ];
+  totalPrice: number;
+  deliveryValue: number;
+}
 
 export const validateUser = (
   req: Request,
@@ -149,9 +158,13 @@ export const validateCart = (
   res: Response,
   next: NextFunction,
 ) => {
-  const cart: ICart = req.body;
+  const cart: ICartOrderBody = req.body;
   const error = [];
+  const getQuantity = cart.products.map((item) => item.quantity);
 
+  if (Number(getQuantity) < 1) {
+    error.push("quantity");
+  }
   if (!cart.totalPrice) {
     error.push("totalPrice");
   }
@@ -162,11 +175,9 @@ export const validateCart = (
     return next();
   }
   if (error.length > 1) {
-    return res
-      .status(400)
-      .send({ message: `Empty ${error} data are required` });
+    return res.status(400).send({ message: `Data ${error} are required` });
   }
-  return res.status(400).send({ message: `Empty ${error} data is required` });
+  return res.status(400).send({ message: `Data ${error}  is required` });
 };
 
 export const validateOrder = (
@@ -174,8 +185,13 @@ export const validateOrder = (
   res: Response,
   next: NextFunction,
 ) => {
-  const order: IOrder = req.body;
+  const order: ICartOrderBody = req.body;
   const error = [];
+  const getQuantity = order.products.map((item) => item.quantity);
+
+  if (Number(getQuantity) < 1) {
+    error.push("quantity");
+  }
 
   if (!order.totalPrice) {
     error.push("totalPrice");
