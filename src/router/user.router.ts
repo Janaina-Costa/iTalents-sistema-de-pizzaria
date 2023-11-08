@@ -22,7 +22,7 @@ import {
 const router = express.Router();
 
 /* Rotas do usuário */
-router.get("/users", authUserMiddleware, findAllUserController);
+router.get("/users", findAllUserController);
 router.get("/user/:id", authUserMiddleware, validateId, findUserByIdController);
 router.post("/user/create", validateUser, createUserController);
 router.put(
