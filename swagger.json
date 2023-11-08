@@ -179,16 +179,18 @@
         "tags": [
           "Usuário"
         ],
-        "parameters": [
-          {
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/user"
-            },
-            "name": "body"
-          }
-        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/user"
+
+              }
+            }
+          },
+          "required":true
+        },
         "responses": {
           "201": {
             "description": "Cria um usuário no banco",
@@ -257,16 +259,20 @@
               "type": "string"
             },
             "name": "id"
-          },
-          {
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/user"
-            },
-            "name": "body"
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/user"
+
+              }
+            }
+          },
+          "required":true
+        },
         "responses": {
           "200": {
             "description": "retorna o usuário atualizado no banco"
@@ -413,16 +419,19 @@
               "type": "string"
             },
             "name": "id"
-          },
-          {
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/addAddress"
-            },
-            "name": "body"
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/addAddress"
+              }
+            }
+          },
+          "required":true
+        },
         "responses": {
           "201": {
             "description": "Adiciona endereço para um usuário",
@@ -432,7 +441,7 @@
                   "type": "array",
                   "items": {
                     "type": "object",
-                    "$ref": "#/components/schemas/user"
+                    "$ref": "#/components/schemas/addAddress"
                   }
                 }
               }
@@ -498,16 +507,24 @@
         "tags": [
           "Endereços"
         ],
-        "parameters": [
-          {
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/addAddress"
-            },
-            "name": "body"
-          }
-        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                  "type": "object",
+                  "properties":{
+                    "id":{
+                      "type":"string"
+                    },
+                    "addressId":{
+                      "type":"string"
+                    }
+                  }
+              }
+            }
+          },
+          "required":true
+        },
         "responses": {
           "200": {
             "description": "Usuário com endereço removido",
@@ -591,16 +608,20 @@
               "type": "string"
             },
             "name": "id"
-          },
-          {
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/addFavoritesProducts"
-            },
-            "name": "body"
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/addFavoritesProducts"
+
+              }
+            }
+          },
+          "required":true
+        },
         "responses": {
           "201": {
             "description": "Adiciona um produto favorito para o usuário",
@@ -676,16 +697,26 @@
         "tags": [
           "Produtos_Favoritos"
         ],
-        "parameters": [
-          {
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/addFavoritesProducts"
-            },
-            "name": "body"
-          }
-        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                  "type": "object",
+                  "properties":
+                  {
+                    "id":{
+                      "type":"string"
+                    },
+                    "productId":{
+                      "type":"string"
+                    }
+                  }
+
+              }
+            }
+          },
+          "required":true
+        },
         "responses": {
           "200": {
             "description": "Usuário com produto favorito removido",
@@ -878,16 +909,18 @@
         "tags": [
           "Produtos"
         ],
-        "parameters": [
-          {
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/product"
-            },
-            "name": "body"
-          }
-        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/product"
+
+              }
+            }
+          },
+          "required":true
+        },
         "responses": {
           "201": {
             "description": "Cria um produto no banco",
@@ -966,6 +999,18 @@
             "name": "body"
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                  "type": "object",
+                  "$ref":"#/components/schemas/product"
+
+              }
+            }
+          },
+          "required":true
+        },
         "responses": {
           "200": {
             "description": "Retorna o produto atualizado no banco de dados"
@@ -1246,16 +1291,18 @@
         "tags": [
           "Carts"
         ],
-        "parameters": [
-          {
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/cart"
-            },
-            "name": "body"
-          }
-        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/cart"
+
+              }
+            }
+          },
+          "required":true
+        },
         "responses": {
           "201": {
             "description": "Cria um carrinho no banco de dados",
@@ -1334,6 +1381,18 @@
             "name": "body"
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/cart"
+
+              }
+            }
+          },
+          "required":true
+        },
         "responses": {
           "200": {
             "description": "retorna o carrinho   atualizado no banco"
@@ -1629,16 +1688,18 @@
         "tags": [
           "Orders"
         ],
-        "parameters": [
-          {
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/order"
-            },
-            "name": "body"
-          }
-        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                  "type": "object",
+                  "$ref":"#/components/schemas/order"
+
+              }
+            }
+          },
+          "required":true
+        },
         "responses": {
           "201": {
             "description": "Cria um pedido no banco de dados",
@@ -1685,7 +1746,7 @@
       }
     },
     "/order/updateStatus/{id}": {
-      "put": {
+      "patch": {
         "security": [
           {
             "bearerAuth": []
@@ -1847,16 +1908,18 @@
         "tags": [
           "Authentication"
         ],
-        "parameters": [
-          {
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/authentication"
-            },
-            "name": "body"
-          }
-        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                  "type": "object",
+                  "$ref":"#/components/schemas/authentication"
+
+              }
+            }
+          },
+          "required":true
+        },
         "responses": {
           "200": {
             "description": "Realiza login e retorna os dados do usuário logado",
@@ -1999,47 +2062,47 @@
           "password": {
             "type": "string"
           },
-          "image":{
-            "type":"string"
+          "image": {
+            "type": "string"
           },
-          "phone":{
-            "type":"string"
+          "phone": {
+            "type": "string"
           },
-          "addresses":{
-            "type":"array",
-            "items":{
-              "properties":{
-                "cep":{
-                  "type":"string"
+          "addresses": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "cep": {
+                  "type": "string"
                 },
-                "street":{
-                  "type":"string"
+                "street": {
+                  "type": "string"
                 },
-                "number":{
-                  "type":"number"
+                "number": {
+                  "type": "number"
                 },
-                "complement":{
-                  "type":"string"
+                "complement": {
+                  "type": "string"
                 },
-                "neighborhood":{
-                  "type":"string"
+                "neighborhood": {
+                  "type": "string"
                 },
-                "createdAt":{
-                  "type":"string"
+                "createdAt": {
+                  "type": "string"
                 }
               }
             }
           },
-          "favorite_product":{
-            "type":"array",
-            "items":{
-              "properties":{
-                "_id":{
-                  "type":"string"
+          "favorite_product": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "_id": {
+                  "type": "string"
                 }
               },
-              "createdAt":{
-                "type":"string"
+              "createdAt": {
+                "type": "string"
               }
             }
           },
@@ -2048,43 +2111,43 @@
           }
         }
       },
-      "addAddress":{
-        "type":"array",
-            "items":{
-              "properties":{
-                "cep":{
-                  "type":"string"
-                },
-                "street":{
-                  "type":"string"
-                },
-                "number":{
-                  "type":"number"
-                },
-                "complement":{
-                  "type":"string"
-                },
-                "neighborhood":{
-                  "type":"string"
-                },
-                "createdAt":{
-                  "type":"string"
-                }
-              }
+      "addAddress": {
+        "type": "array",
+        "items": {
+          "properties": {
+            "cep": {
+              "type": "string"
+            },
+            "street": {
+              "type": "string"
+            },
+            "number": {
+              "type": "number"
+            },
+            "complement": {
+              "type": "string"
+            },
+            "neighborhood": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string"
             }
+          }
+        }
       },
-      "addFavoritesProducts":{
-        "type":"array",
-            "items":{
-              "properties":{
-                "_id":{
-                  "type":"string"
-                }
-              },
-              "createdAt":{
-                "type":"string"
-              }
+      "addFavoritesProducts": {
+        "type": "array",
+        "items": {
+          "properties": {
+            "_id": {
+              "type": "string"
             }
+          },
+          "createdAt": {
+            "type": "string"
+          }
+        }
       },
       "product": {
         "type": "object",
@@ -2092,11 +2155,11 @@
           "name": {
             "type": "string"
           },
-          "description":{
-            "type":"string"
+          "description": {
+            "type": "string"
           },
-          "image":{
-            "type":"string"
+          "image": {
+            "type": "string"
           },
           "size": {
             "type": "string"
