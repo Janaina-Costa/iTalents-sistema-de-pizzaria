@@ -1,85 +1,86 @@
 {
-  "openapi":"3.0.0",
-  "info":{
-    "title":"API pizzaria",
-    "description":"API completa para um sistema de pizzaria",
-    "contact":{
-      "name":"Jana Costa",
-      "email":"jana@email.com"
-    },
-    "version":"1.0.0"
+  "openapi": "3.0.0",
+  "info": {
+    "title": "api Pizzaria",
+    "description": "api para uma aplicação de pizzaria",
+    "contact": {
+      "name": "Janaina Costa",
+      "email": "janaina@email.com"
+    }
   },
-  "servers":[
+  "servers": [
     {
-      "url":"http://localhost:3006/",
-      "description":"Api de teste local"
+      "url": "http://localhost:3006/",
+      "description": "Api de teste local"
     }
   ],
-  "paths":{
-    "/users":{
-      "get":{
-        "security":[
+  "paths": {
+    "/users": {
+      "get": {
+        "security": [
           {
-            "bearerAuth":[]
+            "bearerAuth": []
           }
         ],
-        "summary":"Lista todos os usuários da API",
-        "description":"Rota responsável por listar todos os usuários da api",
-        "tags":["Usuario"],
-        "response":{
-          "200":{
-            "description":"OK!",
-            "content":{
-              "application/json":{
-                "schema":{
+        "summary": "Lista todos os usuários",
+        "description": "Rota responsável por listar todos os usuários da api",
+        "tags": [
+          "Usuário"
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
                   "type": "array",
-                  "items":{
-                    "type":"object",
-                    "ref":"#/components/schemas/Usuario"
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/user"
                   }
                 }
               }
             }
           },
-          "401":{
-            "description":"Unauthorized: Erro de autenticação",
-            "content":{
-              "application/json":{
-                "schema":{
+          "401": {
+            "description": "Erro de autenticação, problema com o Token",
+            "content": {
+              "application/json": {
+                "schema": {
                   "type": "object",
-                  "properties":{
-                    "message":{
-                      "type":"string"
+                  "properties": {
+                    "message": {
+                      "type": "string"
                     }
                   }
                 }
               }
             }
           },
-          "404":{
-            "description":"Not Found: Nenhum usuário encontrado",
-            "content":{
-              "application/json":{
-                "schema":{
+          "404": {
+            "description": "Not found, objeto não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
                   "type": "object",
-                  "properties":{
-                    "message":{
-                      "type":"string"
+                  "properties": {
+                    "message": {
+                      "type": "string"
                     }
                   }
                 }
               }
             }
           },
-          "500":{
-            "description":"Erro interno do servidor",
-            "content":{
-              "application/json":{
-                "schema":{
+          "500": {
+            "description": "Erro no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
                   "type": "object",
-                  "properties":{
-                    "message":{
-                      "type":"string"
+                  "properties": {
+                    "message": {
+                      "type": "string"
                     }
                   }
                 }
@@ -89,75 +90,1676 @@
         }
       }
     },
-    "/user/":{
-      "get":{
-        "summary":"Lista um usuário especifico por ID",
-        "description":"Rota responsável por localizar um usuário especifico por ID",
-        "tags":["Usuario"]
-      }
-    }
-  },
-  "components":{
-    "securitySchemas":{
-      "bearerAuth":{
-        "type":"http",
-        "schema":"bearer",
-        "bearerFormat":"JWT"
-      }
-    },
-    "schemas":{
-      "Usuario":{
-        "type":"object",
-        "properties":{
-          "name":{
-            "type":"string"
-          },
-          "email":{
-            "type":"string"
-          },
-          "password":{
-            "type":"string"
-          },
-          "image":{
-            "type":"string"
-          },
-          "addresses":{
-            "type":"array",
-            "items":{
-              "properties":{
-                "cep":{
-                  "type":"string"
-                },
-                "street":{
-                  "type":"string"
-                },
-                "number":{
-                  "type":"number"
-                },
-                "complement":{
-                  "type":"string"
-                },
-                "neighborhood":{
-                  "type":"string"
-                },
-                "createAt":"string"
-              }
-            }
-          },
-          "favorite_product":{
-            "type":"array",
-            "items":{
-              "properties":{
-                "_id":{
-                  "type":"string"
-                },
-                "createAt":{
-                  "type":"string"
+    "/user/{id}": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Busca o usuário pelo id",
+        "description": "Rota responsável por buscar o usuários da api",
+        "tags": [
+          "Usuário"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "required": true,
+            "scheme": {
+              "type": "string"
+            },
+            "name": "id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retorna um usuário que foi encontrado pelo id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/user"
                 }
               }
             }
           },
-          "admin":"boolean"
+          "401": {
+            "description": "Erro de autenticação, problema com o Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found, objeto não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/create": {
+      "post": {
+        "summary": "Cria um novo usuário",
+        "description": "Rota responsável por criar os usuários da api",
+        "tags": [
+          "Usuário"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/user"
+            },
+            "name": "body"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Cria um usuário no banco",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/user"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro na requisição",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/update/{id}": {
+      "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Busca o usuário pelo id e atualiza",
+        "description": "Rota responsável por buscar o usuários e atualizar na api",
+        "tags": [
+          "Usuário"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "required": true,
+            "scheme": {
+              "type": "string"
+            },
+            "name": "id"
+          },
+          {
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/user"
+            },
+            "name": "body"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "retorna o usuário atualizado no banco"
+          },
+          "401": {
+            "description": "Erro de autenticação, problema com o Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found, objeto não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/remove/{id}": {
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Busca o usuário pelo id e deleta",
+        "description": "Rota responsável por buscar o usuários da api e remover do banco de dados ",
+        "tags": [
+          "Usuário"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "required": true,
+            "scheme": {
+              "type": "string"
+            },
+            "name": "id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleta usuário do banco de dados"
+          },
+          "401": {
+            "description": "Erro de autenticação, problema com o Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found, objeto não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products": {
+      "get": {
+        "summary": "Lista todos os produtos",
+        "description": "Rota responsável por listar todos os produtos da api",
+        "tags": [
+          "Produtos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/pizza"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Erro na requisição",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product/{id}": {
+      "get": {
+        "summary": "Busca o produto pelo id",
+        "description": "Rota responsável por buscar o produto pelo id",
+        "tags": [
+          "Produtos"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "required": true,
+            "scheme": {
+              "type": "string"
+            },
+            "name": "id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retorna um produto encontrado pelo id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/pizza"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found, objeto não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product/create": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Cria um novo produto",
+        "description": "Rota responsável por criar um produto",
+        "tags": [
+          "Produtos"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/pizza"
+            },
+            "name": "body"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Cria um produto no banco",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/pizza"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro na requisição",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product/update/{id}": {
+      "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Atualiza um produto pelo id",
+        "description": "Rota responsável por atualizar um produto pelo id",
+        "tags": [
+          "Produtos"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "required": true,
+            "scheme": {
+              "type": "string"
+            },
+            "name": "id"
+          },
+          {
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/pizza"
+            },
+            "name": "body"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retorna o produto atualizado no banco de dados"
+          },
+          "401": {
+            "description": "Erro de autenticação, problema com o Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro na requisição",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product/remove/{id}": {
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Remove produto pelo id",
+        "description": "Rota responsável por buscar  e deletar um produto pelo id",
+        "tags": [
+          "Produtos"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "required": true,
+            "scheme": {
+              "type": "string"
+            },
+            "name": "id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleta produto no banco de dados"
+          },
+          "401": {
+            "description": "Erro de autenticação, problema com o Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro na requisição",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/carts": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Lista todos os carrinhos",
+        "description": "Rota responsável por listar todos os carrinhos da api",
+        "tags": [
+          "Carts"
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/cart"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro na requisição",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cart/{id}": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Busca um carrinho  pelo id",
+        "description": "Rota responsável por buscar um carrinho  da api pelo id",
+        "tags": [
+          "Carts"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "required": true,
+            "scheme": {
+              "type": "string"
+            },
+            "name": "id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retorna um carrinho que foi encontrado pelo id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/cart"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erro de autenticação, problema com o Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found, objeto não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cart/create": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Cria uma novo carrinho na api",
+        "description": "Rota responsável por criar um carrinho na api",
+        "tags": [
+          "Carts"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/cart"
+            },
+            "name": "body"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Cria um carrinho no banco de dados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/pizza"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found, objeto não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cart/update/{id}": {
+      "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Atualiza um carrinho pelo id",
+        "description": "Rota responsável por atualiza o carrinho pelo id",
+        "tags": [
+          "Carts"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "required": true,
+            "scheme": {
+              "type": "string"
+            },
+            "name": "id"
+          },
+          {
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/cart"
+            },
+            "name": "body"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "retorna o carrinho   atualizado no banco"
+          },
+          "401": {
+            "description": "Erro de autenticação, problema com o Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found, objeto não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cart/remove/{id}": {
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Remove carrinho pelo id",
+        "description": "Rota responsável por buscar e deletar um carrinho  pelo id ",
+        "tags": [
+          "Carts"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "required": true,
+            "scheme": {
+              "type": "string"
+            },
+            "name": "id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleta um carrinho do banco de dados"
+          },
+          "401": {
+            "description": "Erro de autenticação, problema com o Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found, objeto não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Lista todos os pedidos",
+        "description": "Rota responsável por listar todos os pedidos da api",
+        "tags": [
+          "Orders"
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/order"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro na requisição",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/order/{id}": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Busca um pedido  pelo id",
+        "description": "Rota responsável por buscar um pedido  pelo id",
+        "tags": [
+          "Orders"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "required": true,
+            "scheme": {
+              "type": "string"
+            },
+            "name": "id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retorna um pedido que foi encontrado pelo id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/order"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erro de autenticação, problema com o Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro na requisição",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found, objeto não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/order/create": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Cria uma novo pedido na api",
+        "description": "Rota responsável por criar um pedido na api",
+        "tags": [
+          "Orders"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/order"
+            },
+            "name": "body"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Cria um pedido no banco de dados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/order"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found, objeto não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/order/updateStatus/{id}": {
+      "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Atualiza o status de um pedido pelo id",
+        "description": "Rota responsável por atualizar  status pelo id",
+        "tags": [
+          "Orders"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "required": true,
+            "scheme": {
+              "type": "string"
+            },
+            "name": "id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retorna o pedido com status atualizado no banco de dados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/order"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Erro de autenticação, problema com o Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found, objeto não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/order/remove/{id}": {
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Remove um pedido na api",
+        "description": "Rota responsável por buscar e deletar um pedido  pelo id ",
+        "tags": [
+          "Orders"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "required": true,
+            "scheme": {
+              "type": "string"
+            },
+            "name": "id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleta um pedido do banco de dados"
+          },
+          "401": {
+            "description": "Erro de autenticação, problema com o Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found, objeto não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "post": {
+        "summary": "Realiza login",
+        "description": "Rota responsável por realizar o login do usuário ",
+        "tags": [
+          "Authentication"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/authentication"
+            },
+            "name": "body"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Realiza login e retorna os dados do usuário logado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/authenticationToken"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro na requisição",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found, objeto não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/token": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Realiza login via token",
+        "description": "Rota responsável por realizar o login via token ",
+        "tags": [
+          "Authentication"
+        ],
+        "responses": {
+          "201": {
+            "description": "realiza login via token e retorna os dados do usuário logado via token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/authenticationToken"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Erro na requisição",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "jwt"
+      }
+    },
+    "schemas": {
+      "user": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "cpf": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "isAdmin": {
+            "type": "boolean"
+          },
+          "address": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          }
+        }
+      },
+      "pizza": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "createdAt": {
+            "type": "string"
+          }
+        }
+      },
+      "cart": {
+        "type": "object",
+        "properties": {
+          "pizzas": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "_id": {
+                  "type": "string"
+                },
+                "quantity": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "totalPrice": {
+            "type": "number"
+          },
+          "freigth": {
+            "type": "number"
+          },
+          "userId": {
+            "type": "string"
+          }
+        }
+      },
+      "order": {
+        "type": "object",
+        "properties": {
+          "pizzas": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "_id": {
+                  "type": "string"
+                },
+                "quantity": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "totalPrice": {
+            "type": "number"
+          },
+          "freigth": {
+            "type": "number"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "close": {
+            "type": "boolean"
+          }
+        }
+      },
+      "authentication": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "authenticationToken": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          }
         }
       }
     }
