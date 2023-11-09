@@ -9,7 +9,7 @@ export const findAllUserController = async (req: Request, res: Response) => {
   try {
     const user = await userService.finAllUsersService();
     if (!user) {
-      return res.status(404).send({ message: "User not found" });
+      return res.status(404).send({ message: "Users not found" });
     }
     return res.status(200).send(user);
   } catch (err: any) {
@@ -56,6 +56,7 @@ export const updateUserController = async (req: Request, res: Response) => {
 
     const updatedUser = await userService.updateUserService(id, user);
 
+    // valida se o id digitado existe
     if (updatedUser?.id !== id) {
       return res.status(404).send({ message: "User not found" });
     }
@@ -74,6 +75,7 @@ export const removeUserController = async (req: Request, res: Response) => {
     const { id } = req.params;
     const user = await userService.removeUserService(id);
 
+    // valida se o usuário existe
     if (!user) {
       return res.status(404).send({ message: "User does not exist" });
     }
@@ -155,6 +157,8 @@ export const addUserFavoriteProductController = async (
     if (!user) {
       return res.status(404).send({ message: "User not found" });
     }
+
+    // valida se o produto existe na base de dados
     const productsId = products.map((item) => {
       /* converte ObjectId em string */
       const productId = String(item._id);
@@ -164,6 +168,8 @@ export const addUserFavoriteProductController = async (
     if (!productsId.includes(true)) {
       return res.status(404).send({ message: "Product not found" });
     }
+
+    // verifica se o produto já foi adicionado anteriormente
     const favoriteProductAlreadyExists = user?.favorite_product.map((item) => {
       if (item._id === undefined) {
         return null;
@@ -199,6 +205,7 @@ export const removeUserFavoriteProductController = async (
     const favoriteProductRemoved =
       await userService.removeUserFavoriteProductService(id, productId);
 
+    // verifica se o produto a ser removido existe para o usuário indicado
     const favoriteProductExists =
       favoriteProductRemoved.value?.favorite_product.map((item) => {
         if (item._id === undefined) {

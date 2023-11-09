@@ -22,6 +22,7 @@ export const findCartByIdController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const cart = await cartService.findCartByIdService(id);
+
     // verifica se o cart pesquisado existe
     if (!cart) {
       return res.status(404).send({ message: "Cart not found" });
