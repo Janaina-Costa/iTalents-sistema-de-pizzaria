@@ -1,0 +1,16 @@
+{
+    "client": "Thunder Client",
+    "environmentName": "env",
+    "dateExported": "2023-11-08T23:58:26.195Z",
+    "version": "1.0",
+    "variables": [
+        {
+            "name": "_var",
+            "value": "http://localhost:3006"
+        },
+        {
+            "name": "token",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlzQWRtaW4iOmZhbHNlLCJfaWQiOiI2NTQyZDUwODczNGYxYmUzNTQ4MWY2NmMiLCJuYW1lIjoiYWxleGFuZGVyIHZpYW5uYWEgY29zdGEgY29zdGEiLCJlbWFpbCI6ImFsZXhhZGVyMkBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCR6L1JtMS9Dd2x4ZTdtZTdZTXNBNUxPdWsvSnBYMnNsQm0wWm5keTYvbmVrb2t5Y1habFFSZSIsImltYWdlIjoiaHR0cHM6Ly9pbWcuZnJlZXBpay5jb20vdmV0b3Jlcy1ncmF0aXMvcGVyc29uYWdlbS1kZS1kZXNlbmhvLWFuaW1hZG8taG9tZW0tYWZyaWNhbm9fMTMwOC0xNDEzODAuanBnIiwicGhvbmUiOiI5OTc3Ny05MzMzOSIsImFkZHJlc3NlcyI6W10sImNyZWF0ZWRBdCI6IjIwMjMtMTEtMDFUMjI6NDU6MjguMTE0WiIsInVwZGF0ZWRBdCI6IjIwMjMtMTEtMDdUMDE6NDM6MzEuMjExWiIsIl9fdiI6MCwiZmF2b3JpdGVfcHJvZHVjdCI6W119LCJpYXQiOjE2OTk0NTYxMjAsImV4cCI6MTY5OTU0MDcyMH0.oz3ocQxfjtWmvfVyWKij9dy23kygNS_xPI4s_uP19D4"
+        }
+    ]
+}
