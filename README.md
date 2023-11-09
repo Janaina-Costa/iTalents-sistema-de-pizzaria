@@ -9,8 +9,8 @@ Projeto final do curso de back end da iTalents onde foi desenvolvido  um sistema
 <p  align='center'>
     <a  href='#-tecnologias' > Tecnologias</a>   |  &nbsp
     <a  href='#-instalação' > Instalação</a>   |  &nbsp
-<a  href='#-endpoints' > Endpoints</a>   |  &nbsp
-    <a  href='#-layout' > Links úteis</a>   |  &nbsp
+    <a  href='#-documentação' > Documentação</a>   |  &nbsp
+    <a  href='#-links' > Links</a>   |  &nbsp
     <a  href='#-licença' > Licença</a>
 
 </br>
@@ -38,17 +38,38 @@ Projeto final do curso de back end da iTalents onde foi desenvolvido  um sistema
 | <p style="color:DodgerBlue"> Baixe o projeto</p>                    | No seu terminal, digite o seguinte comando:`git clone git@github.com:Janaina-Costa/iTalents-sistema-de-pizzaria.git` |
 |                                                                     |                                                                                                                     |
 | <p style="color:DodgerBlue">Baixe as dependências do projeto</p>   |       Caminhe até o arquivo do projeto:`cd iTalents-sistema-de-pizzaria` e digite o seguinte comando:  `yarn`       |
-| <p style="color:DodgerBlue">Abra o seu projeto</p>                                                  |                     Abra o seu projeto no editor de código da sua preferência, por ex: VS Code                     |
-| <p style="color:DodgerBlue">Configure as variáveis de ambiente</p> |        Na raiz do projeto, crie um arquivo chamado`.env` e faça as configurações conforme o`.env.example`        |
-| <p style="color:DodgerBlue"> Rodar o projeto</p>                    |                                     No seu terminal digite o comando `yarn dev`                                     |
 |                                                                     |                                                                                                                     |
+| <p style="color:DodgerBlue">Abra o seu projeto</p>                  |                     Abra o seu projeto no editor de código da sua preferência, por ex: VS Code                     |
+|                                                                     |                                                                                                                     |
+| <p style="color:DodgerBlue">Configure as variáveis de ambiente</p> |        Na raiz do projeto, crie um arquivo chamado`.env` e faça as configurações conforme o`.env.example`        |
+|                                                                     |                                                                                                                     |
+| <p style="color:DodgerBlue"> Rodar o projeto</p>                    |                 No seu terminal digite o comando`yarn dev`. A aplicação vai rodar na porta `3006`                 |
+|                                                                     |                                                                                                                     |
+
+🚀️ Use a extensão do **ThunderClient** ou outro framework da sua preferência (**Insomnia/ Postman**/...) para rodar as requisições do projeto.
 
 </br>
 
-## Endpoints
+## 📝 Documentação dos Endpoints
 
+O projeto está com todos os endpoints documentados no Swagger.Para rodar a documentação/endpoints:
 
-## Links úteis
+1. Suba o servidor - `yarn dev`
+2. Acesse o link [http://localhost:3006/api-docs/](https://localhost:3006/api-docs/)
+
+</br>
+
+## Links Úteis
+
+[MongoDB](https://www.mongodb.com/https:/)
+
+[Mongoose](https://mongoosejs.com/)
+
+[JWT](https://jwt.io/https:/)
+
+[Swagger](https://swagger.io/)
+
+</br>
 
 ## Licença
 
