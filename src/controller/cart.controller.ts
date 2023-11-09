@@ -49,7 +49,7 @@ export const createCartController = async (
     };
     const cartProductId = cartBody?.products.map((p) => p._id);
 
-    // verifica se o produto que se quer alterar existe no carrinho selecionado
+    // verifica se o produto que se quer criar existe na base de dados
     const existisProductId = product.map(
       (item) => String(cartProductId) === item.id,
     );
@@ -71,7 +71,7 @@ export const updateCartController = async (req: Request, res: Response) => {
     const cartBody: ICart = req.body;
     const cart = await cartService.findCartByIdService(id);
 
-    // verifica se o produto informado para update existe na lista de produtos do cart selecionado
+    // verifica se o produto informado para update existe na lista de produtos do carrinho selecionado
     const productBodyId = cartBody.products.map((item) => item._id);
     const existisProduct = cart?.products.map(
       (i) => String(i._id) === String(productBodyId),
