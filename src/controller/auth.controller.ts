@@ -20,9 +20,11 @@ const loginUserController = async (req: Request, res: Response) => {
     }
     const token = loginUserService.generateToken(userLogin, secret);
 
-    return res
-      .status(200)
-      .send({ message: "User logged successful", token, id: userLogin.id });
+    return res.status(200).send({
+      token,
+      id: userLogin.id,
+      email: userLogin.email,
+    });
   } catch (err: any) {
     console.log(`Erro: ${err.message}`);
     return res.status(500).send({ message: "Internal server error" });
