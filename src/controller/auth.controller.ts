@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import { Request, Response } from "express";
 
 import { SECRET_TOKEN } from "settings";
@@ -13,7 +14,16 @@ const loginUserController = async (req: Request, res: Response) => {
     const userLogin = await loginUserService.login(user.email);
 
     // verificação de email e senha incorretos
-    if (!user.email || user.password !== userLogin?.password) {
+    if (!user.email || user.email !== userLogin?.email) {
+      return res
+        .status(400)
+        .send({ message: "User or password does not exist" });
+    }
+    const comparePassword = await bcrypt.compare(
+      user.password,
+      userLogin.password,
+    );
+    if (!comparePassword) {
       return res
         .status(400)
         .send({ message: "User or password does not exist" });
