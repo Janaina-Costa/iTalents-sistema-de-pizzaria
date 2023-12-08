@@ -103,6 +103,7 @@ export const validateProduct = (
   next: NextFunction,
 ) => {
   const product: IProduct = req.body;
+
   const error = [];
   if (!product.name) {
     error.push("name");
@@ -113,8 +114,8 @@ export const validateProduct = (
   if (!product.image) {
     error.push("image");
   }
-  if (!product.size) {
-    error.push("size");
+  if (!product.category) {
+    error.push("category");
   }
   if (!product.price) {
     error.push("price");
@@ -140,7 +141,11 @@ export const validateProductBody = (
 
   const enumSize = [ProductSizes].map(
     (item) =>
-      item.P === size || item.M === size || item.G === size || item.GG === size,
+      item.N === size ||
+      item.P === size ||
+      item.M === size ||
+      item.G === size ||
+      item.GG === size,
   );
 
   if (!size) {

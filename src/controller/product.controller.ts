@@ -38,16 +38,30 @@ export const findProductByIdController = async (
 };
 
 export const createProductController = async (req: Request, res: Response) => {
-  const product: IProduct = req.body;
   try {
-    await productService.createProductService(product);
+    const product: IProduct = req.body;
+    const products = await productService.FindAllProductsService();
 
-    return res.status(201).send({ message: "Product created successfully" });
-  } catch (err: any) {
-    console.log(String(err.message));
-    if (err.code === 11000) {
+    const getProduct = products.map((prod) =>
+      prod.name.replace(/\s/g, "").toLowerCase(),
+    );
+
+    const alreadyExist = getProduct.includes(
+      product.name.replace(/\s/g, "").toLowerCase(),
+    );
+
+    if (alreadyExist) {
       return res.status(400).send({ message: "Product already existis!" });
     }
+
+    await productService.createProductService(product);
+
+    return res.status(201).send({
+      message: "Product created successfully",
+      product: { ...product },
+    });
+  } catch (err: any) {
+    console.log(String(err.message));
 
     console.log(`Erro: ${err}`);
     return res.status(500).send({ message: "Internal server error" });
