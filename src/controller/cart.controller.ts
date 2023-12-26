@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 
 import * as cartService from "service/cart.service";
-import { FindAllProductsService } from "service/product.service";
 import { ICart } from "types/interface/cart";
 
 interface IGetUserAuthRequest extends Request {
@@ -41,24 +40,15 @@ export const createCartController = async (
 ) => {
   try {
     const cart: ICart = req.body;
-    const product = await FindAllProductsService();
 
     const cartBody = {
       ...cart,
       userId: req.userId,
     };
-    const cartProductId = cartBody?.products.map((p) => p._id);
-
-    // verifica se o produto que se quer criar existe na base de dados
-    const existisProductId = product.map(
-      (item) => String(cartProductId) === item.id,
-    );
-    if (!existisProductId.includes(true)) {
-      return res.status(404).send({ message: "Product not found" });
-    }
+    console.log(cartBody);
 
     await cartService.createCartService(cartBody);
-    return res.status(200).send({ message: "Cart created successfully" });
+    return res.status(200).send(cartBody);
   } catch (err: any) {
     console.log(`Erro: ${err.message}`);
     return res.status(500).send({ message: "Internal server error" });

@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 
 import * as orderService from "service/order.service";
-import { FindAllProductsService } from "service/product.service";
 import { IOrder } from "types/interface/order";
 
 interface IGetUserAuthRequest extends Request {
@@ -42,20 +41,12 @@ export const createOrdersController = async (
 ) => {
   try {
     const order: IOrder = req.body;
-    const product = await FindAllProductsService();
+
     const orderBody = {
       ...order,
       userId: req.userId,
     };
 
-    const cartProductId = orderBody?.products.map((p) => p._id);
-
-    const existisProductId = product.map(
-      (item) => String(cartProductId) === item.id,
-    );
-    if (!existisProductId.includes(true)) {
-      return res.status(404).send({ message: "Product not found" });
-    }
     await orderService.createOrderService(orderBody);
 
     return res.status(201).send({ message: "Order created successfully" });
