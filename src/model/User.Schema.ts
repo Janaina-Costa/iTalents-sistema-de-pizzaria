@@ -15,7 +15,7 @@ const UserSchema = new Schema(
       {
         cep: { type: String, required: true },
         street: { type: String, required: true },
-        number: { type: Number, required: true },
+        number: { type: String, required: true },
         complement: { type: String },
         neighborhood: { type: String, required: true },
         createdAt: { type: Date, default: Date.now() },
