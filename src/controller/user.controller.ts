@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import { Request, Response } from "express";
 
 import { FindAllProductsService } from "service/product.service";
@@ -53,8 +54,17 @@ export const updateUserController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const user: IUser = req.body;
+    let bcry;
 
-    const updatedUser = await userService.updateUserService(id, user);
+    if (user.password) {
+      bcry = await bcrypt.hash(user.password, 10);
+    }
+
+    const updatedUser = await userService.updateUserService(id, {
+      ...user,
+      password: bcry,
+    });
+    console.log(updatedUser);
 
     // valida se o id digitado existe
     if (updatedUser?.id !== id) {
@@ -91,6 +101,7 @@ export const addUserAddressController = async (req: Request, res: Response) => {
     const addresses: IAdressUser = req.body;
     const { id } = req.params;
     const user = await userService.findUserByIdService(id);
+    console.log(addresses);
 
     if (!user) {
       return res.status(404).send({ message: "User not found" });
@@ -123,20 +134,23 @@ export const removeUserAddressController = async (
 ) => {
   try {
     const { id, addressId } = req.body;
+    console.log("sss", addressId);
     const user = await userService.findUserByIdService(id);
 
     // valida se o id do endereço a ser removido existe para o usuário informado
-    const addressExists = user?.addresses.map(
-      (item) => String(item._id) === addressId,
-    );
+    const addressExists = user?.addresses.map((item) => item._id === addressId);
 
-    if (!addressExists?.includes(true)) {
-      return res.status(404).send({ message: "Address not found" });
-    }
+    console.log(addressExists);
 
-    await userService.removeUserAddressService(id, addressId);
+    // if (!addressExists?.includes(true)) {
+    //   return res.status(404).send({ message: "Address not found" });
+    // }
 
-    return res.status(200).send({ message: "Address removed successfully" });
+    const tt = await userService.removeUserAddressService(id, addressId);
+
+    return res
+      .status(200)
+      .send({ tt, message: "Address removed successfully" });
   } catch (err: any) {
     console.log(`Erro: ${err.message}`);
     return res.status(500).send({ message: "Internal server error" });
