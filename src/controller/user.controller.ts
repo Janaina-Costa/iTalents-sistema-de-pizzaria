@@ -134,23 +134,10 @@ export const removeUserAddressController = async (
 ) => {
   try {
     const { id, addressId } = req.body;
-    console.log("sss", addressId);
-    const user = await userService.findUserByIdService(id);
 
-    // valida se o id do endereço a ser removido existe para o usuário informado
-    const addressExists = user?.addresses.map((item) => item._id === addressId);
+    await userService.removeUserAddressService(id, addressId);
 
-    console.log(addressExists);
-
-    // if (!addressExists?.includes(true)) {
-    //   return res.status(404).send({ message: "Address not found" });
-    // }
-
-    const tt = await userService.removeUserAddressService(id, addressId);
-
-    return res
-      .status(200)
-      .send({ tt, message: "Address removed successfully" });
+    return res.status(200).send({ message: "Address removed successfully" });
   } catch (err: any) {
     console.log(`Erro: ${err.message}`);
     return res.status(500).send({ message: "Internal server error" });
